@@ -110,7 +110,6 @@
     </Compile>
     <Compile Include="CryptorEngine.cs" />
     <Compile Include="DataAccess.cs" />
-    <Compile Include="DataBuilder.cs" />
     <Compile Include="DataClasses.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Models\DarkEchoSystemsModel.cs" />
