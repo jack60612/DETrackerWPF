@@ -1,0 +1,331 @@
+﻿<Window x:Class="DETrackerWPF.Views.SystemHistoryView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:local="clr-namespace:DETrackerWPF.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="SystemHistoryView"         
+        d:DesignHeight="450" d:DesignWidth="800"
+        Margin="0" Padding="0" SizeToContent="Width" WindowStartupLocation="CenterOwner" Icon="/DETrackerWPF;component/Resources/squadronkraken_small.ico">
+
+
+    <Window.Resources>
+
+        <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1" Opacity="0.8">
+            <GradientStop Offset="1" Color="DarkGray"/>
+            <GradientStop Offset="0" Color="LightSlateGray"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="FhBrush" StartPoint="0,0" EndPoint="0,1" Opacity="0.8">
+            <GradientStop Offset="1" Color="CadetBlue"/>
+            <GradientStop Offset="0" Color="CornflowerBlue"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="CenterText" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" Padding="0,0,0,2" Background="Transparent"></TextBlock>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="11"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+
+        <Style x:Key="DataGridCellCentered" TargetType="DataGridCell">
+            <Setter Property="Height" Value="45"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Foreground" Value="MediumBlue"></Setter>
+        </Style>
+
+        <Style x:Key="DataGridContentCellCentering" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="1" BorderBrush="Black" BorderThickness="1">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" 
+                                                        ScaleX="1.5" ScaleY="1.5"/>
+                                                <TranslateTransform X="0.02" Y="0.3"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Offset="1" Color="#00000000"/>
+                                        <GradientStop Offset="0.3" Color="#FFFFFFFF"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Medium">
+                                </ContentPresenter>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                                                    <TranslateTransform X="0.02" Y="0.3"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <GradientStop Color="#00000000" Offset="1"/>
+                                            <GradientStop Color="#FF303030" Offset="0.3"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF33962B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width ="*" />
+                <ColumnDefinition Width ="Auto" />
+                <ColumnDefinition Width ="Auto" />
+                <ColumnDefinition Width ="Auto" />
+                <ColumnDefinition Width="10" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+
+
+            <!--Row 1   - Main Header -->
+
+            <Border BorderBrush="Black" BorderThickness="1"  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4">
+                <StackPanel Background="{StaticResource BgBrush1}">
+                    <TextBlock Text="{Binding Path=HeaderSummary}" VerticalAlignment="Center" Margin="5,5" TextAlignment="Center" FontSize="16" FontWeight="Bold" Height="48"></TextBlock>
+                </StackPanel>
+            </Border>
+
+
+            <Button x:Name="EliteBgsButton" 
+                    Grid.Column="2" Grid.Row="1"
+                    Width="35" Height="35" Margin="5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding EliteBGS}"></Image>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button x:Name="AnalyticsButton" 
+                    Grid.Column="3" Grid.Row="1"
+                    Width="35" Height="35" Margin="5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Analytics}"></Image>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button x:Name="InfoButton" 
+                    Grid.Column="4" Grid.Row="1"
+                    Width="35" Height="35" Margin="5">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Image Source="{Binding Info}"></Image>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <!-- Row 2 - Grid for factions headers and data -->
+
+            <Grid Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width ="auto" />
+                    <ColumnDefinition Width ="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Row 0 - DE logo -->
+
+                <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="0.8" Width="80" Height="68" Background="{StaticResource FhBrush}" Margin="0" Grid.IsSharedSizeScope="True">
+                    <Image x:Name="DeLogo"></Image>
+                </Border>
+
+                <!-- Row 0  Faction Headers -->
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.IsSharedSizeScope="True">
+                    <ItemsControl x:Name="FactionsHeader" ItemsSource="{Binding Path=Factions}" Grid.IsSharedSizeScope="True">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Left"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Black" BorderThickness="0.8">
+                                    <StackPanel Width="270">
+                                        <TextBlock Margin="0" TextWrapping="Wrap" Height="66" Background="{StaticResource FhBrush}" TextAlignment="Center" Padding="5,0">
+                                            <Run FontSize="18" FontWeight="Bold" Text="{Binding FactionName}"></Run>
+                                            <LineBreak></LineBreak>
+                                            <Run FontSize="12" FontWeight="Bold"  Text="{Binding GovernmentaAllegiance}"></Run>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Row 1 - Data Headers -->
+
+                <Border Grid.Column="0" Grid.Row="1" BorderThickness="1" BorderBrush="Black" Width="80">
+                    <TextBlock Width="78.6" Text="Date" FontSize="14" FontWeight="DemiBold" Padding="3" Background="Wheat"></TextBlock>
+                </Border>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+
+                    <ItemsControl x:Name="FactionHeaders" ItemsSource="{Binding Path=FactionHeaders}" Grid.IsSharedSizeScope="True">
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Black" BorderThickness="0.8">
+                                    <StackPanel Width="270" Orientation="Horizontal">
+
+                                        <Border BorderThickness="0.5" BorderBrush="Black" Margin="0">
+                                            <TextBlock x:Name="InfHeader" Text="{Binding Path=InfHeader}" Width="53" 
+                                               FontSize="14" FontWeight="DemiBold" 
+                                               Padding="3" Background="Wheat"></TextBlock>
+                                        </Border>
+
+                                        <Border BorderThickness="0.5" BorderBrush="Black" Margin="0">
+                                            <TextBlock x:Name="ChgHeader" Text="{Binding Path=ChgHeader}" Width="53" FontSize="14" FontWeight="DemiBold" Padding="3" Background="Wheat"></TextBlock>
+                                        </Border>
+                                        <Border BorderThickness="0.5" BorderBrush="Black" Margin="0">
+                                            <Button x:Name="StateHeader" Content="{Binding Path=StateHeader}" 
+                                                    Width="161" 
+                                                    FontSize="14" FontWeight="DemiBold" 
+                                                    Padding="3" Margin="0"
+                                                    Background="DarkGray" Style="{StaticResource RoundCorner}"
+                                                    cal:Message.Attach="[Event Click] = [Action StateHeader_Click()]"></Button>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Row 2 - The date column and history data -->
+
+                <ScrollViewer x:Name="SV" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
+                          VerticalScrollBarVisibility="Hidden"
+                          HorizontalScrollBarVisibility="Disabled" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Top"
+                          Grid.IsSharedSizeScope="True"
+                          CanContentScroll="False"
+                          cal:Message.Attach="[Event PreviewMouseWheel] = [PreviewMouseWheel($source, $eventArgs)]">
+
+                    <StackPanel Orientation="Horizontal" Grid.IsSharedSizeScope="True">
+
+                        <DataGrid x:Name="HistDates"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Path=HistDates}" 
+                              Width="80" RowHeight="65"
+                              Margin="0" Padding="0"
+                              GridLinesVisibility="None"
+                              CanUserAddRows="False"
+                              CanUserReorderColumns="False"
+                              CanUserResizeColumns="False"
+                              CanUserSortColumns="False"
+                              IsReadOnly="True"
+                              AlternatingRowBackground="Cornsilk" RowBackground="#e8e8e8"
+                              HeadersVisibility="None"
+                              FontWeight="DemiBold"
+                              VerticalScrollBarVisibility="Disabled"
+                              HorizontalScrollBarVisibility="Disabled">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn x:Name="HistDAte" Header="Date" 
+                                    Binding="{Binding Path=HistDate}" 
+                                    CellStyle="{StaticResource DataGridContentCellCentering}"/>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <ItemsControl x:Name="Factions" Grid.IsSharedSizeScope="True" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Black" BorderThickness="0.8">
+                                        <StackPanel Width="270">
+                                            <local:SysFaction1View  x:Name="FactionHistory" Margin="0" Padding="0"></local:SysFaction1View>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+        </Grid>
+    </ScrollViewer>
+</Window>
+
