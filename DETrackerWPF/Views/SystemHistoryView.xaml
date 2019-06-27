@@ -281,7 +281,7 @@
                         <DataGrid x:Name="HistDates"
                               AutoGenerateColumns="False"
                               ItemsSource="{Binding Path=HistDates}" 
-                              Width="80" RowHeight="65"
+                              Width="80" RowHeight="57"
                               Margin="0" Padding="0"
                               GridLinesVisibility="None"
                               CanUserAddRows="False"
@@ -291,7 +291,7 @@
                               IsReadOnly="True"
                               AlternatingRowBackground="Cornsilk" RowBackground="#e8e8e8"
                               HeadersVisibility="None"
-                              FontWeight="DemiBold"
+                              FontWeight="Bold"
                               VerticalScrollBarVisibility="Disabled"
                               HorizontalScrollBarVisibility="Disabled">
 

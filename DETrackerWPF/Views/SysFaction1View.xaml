@@ -163,7 +163,7 @@
                   x:Name="FactionHistory"
                   AutoGenerateColumns="False" 
                   ItemsSource="{Binding Path=FactionHistory}" 
-                  Width="270" RowHeight="65" Margin="0"
+                  Width="270" RowHeight="57" Margin="0"
                   GridLinesVisibility="Vertical"
                   CanUserAddRows="False"
                   CanUserReorderColumns="False"
@@ -201,7 +201,7 @@
                                     <DataTemplate>
                                         <Label Style="{StaticResource MyLabelStyle}"  
                                                Content="{Binding State}" 
-                                               Margin="5,2,5,2" Padding="4,1,4,2" 
+                                               Margin="5,3,5,2" Padding="4,2" 
                                                FontWeight="DemiBold" 
                                                BorderBrush="Black" BorderThickness="1"
                                                VerticalContentAlignment="Center" VerticalAlignment="Center"></Label>

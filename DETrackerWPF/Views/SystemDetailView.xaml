@@ -81,7 +81,7 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="5" />
             <ColumnDefinition Width ="Auto" />
             <ColumnDefinition Width ="Auto" />
             <ColumnDefinition Width ="Auto" />
@@ -91,10 +91,10 @@
             <ColumnDefinition Width ="Auto" />
             <ColumnDefinition Width ="Auto" />
             <ColumnDefinition Width ="*" />
-            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -102,13 +102,13 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="5" />
         </Grid.RowDefinitions>
 
         <!-- Header -->
         <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="9" 
                     Orientation="Vertical"
-                    Background="{StaticResource BgBrush4}">
+                    Background="{StaticResource BgBrush4}" Margin="0,0,0,3">
 
             <Grid x:Name="SystemOverview"
                   Margin="5">
@@ -243,7 +243,7 @@
         <StackPanel Grid.Column="9" Grid.Row="2" Grid.RowSpan="5"
                     Background="{StaticResource BgBrush1}"
                     MinWidth="200"
-                    Visibility="{Binding Path=ShowPMFData, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    Visibility="{Binding Path=ShowPMFData, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="1,0,0,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10" />
@@ -332,12 +332,12 @@
         <!-- Orbital and planetary stations panel-->
         <StackPanel Orientation="Vertical"
                     Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="5"
-                    Background="{StaticResource BgBrush3}">
+                    Background="{StaticResource BgBrush3}" Margin="0,0,1,0">
 
 
             <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
                    FontSize="14" FontWeight="Bold"
-                   Text="Orbital Stations" Margin="0,5">
+                   Text="Orbital Stations" Margin="5,5,0,5">
             </TextBlock>
 
             <StackPanel>
@@ -363,7 +363,7 @@
             </StackPanel>
 
             <TextBlock FontSize="14" FontWeight="Bold"
-                   Text="Planetary Stations"  Margin="0,5"
+                   Text="Planetary Stations"  Margin="5,5,0,5"
                    Visibility="{Binding Path=ArePlanetary, Converter={StaticResource BooleanToVisibilityConverter}}">
             </TextBlock>
 
@@ -396,7 +396,7 @@
         <oxy:PlotView Model="{Binding PlotModel}"
                 Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="9"
                 MinWidth="400" MinHeight="300"
-                  Background="{StaticResource BgBrush3}" Margin="0,10,0,0">
+                  Background="{StaticResource BgBrush3}" Margin="0,3,0,0">
         </oxy:PlotView>
 
     </Grid>
