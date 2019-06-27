@@ -24,6 +24,7 @@
         <Style x:Key="SelectedRowExpansion" TargetType="{x:Type DataGridRow}">
             <Setter Property="cal:Message.Attach" Value="[MouseDoubleClick] = [Action RowSelectExpansion($dataContext)]"/>
         </Style>
+
         <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="Yellow"/>
             <GradientStop Offset="1" Color="BurlyWood"/>

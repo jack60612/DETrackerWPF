@@ -31,7 +31,6 @@ namespace DETrackerWPF.ViewModels
 
         DataAccess dataAccess = new DataAccess();
 
-
         public SystemDetailViewModel(List<DESystemsForDisplay> deSystemsForDisplay, string sysName)
         {
 
@@ -61,11 +60,11 @@ namespace DETrackerWPF.ViewModels
 
             DisplayDarkEchoSystem();
 
+            // Fire off the retrieval of close PMFs and Expansion targets as background task 
             PMFStatus = "Loading Closest PMFs and Expansion Systems";
             Task task = Task.Run(async () => await dataAccess.GetClosePlayerFactions(SystemOverview, _closePlayerFactions, _expansionSystems));
             task.ContinueWith(DataRetrived);
         }
-
         /// <summary>
         /// Data retrieval complete, set some properties
         /// </summary>
@@ -78,7 +77,6 @@ namespace DETrackerWPF.ViewModels
             ExpansionTargetSystems = new ObservableCollection<ExpansionSystems>(_expansionSystems.OrderBy(x => x.Distance));
             ShowPMFData = true;
         }
-
         /// <summary>
         /// Load system performance graph
         /// </summary>
@@ -87,7 +85,6 @@ namespace DETrackerWPF.ViewModels
             var tempData = new List<double>();
             string FactionName = String.Empty;
             var tmpFactionData = new List<SystemInfByFactionOxy>();
-            //TrafficButtonContent = "Show Traffic";
 
             PlotModel.Series.Clear();
             PlotModel.Axes.Clear();
@@ -138,10 +135,8 @@ namespace DETrackerWPF.ViewModels
             }
 
             AddAxis();
-            //PlotModel.Title = string.Format("System: {0} - Faction performance over the past {1} days", SystemOverview.SystemName, MaxHistoryDays);
             PlotModel.InvalidatePlot(true);
         }
-
         /// <summary>
         /// Add the axes
         /// </summary>
@@ -184,27 +179,29 @@ namespace DETrackerWPF.ViewModels
         /// <param name="SelectedSystem"></param>
         public void RowSelectExpansion(ExpansionSystems SelectedSystem)
         {
-            System.Diagnostics.Process.Start(string.Format("https://eddb.io/system/{0}",SelectedSystem.id));
+            System.Diagnostics.Process.Start(string.Format("https://eddb.io/system/{0}",SelectedSystem.EddbID));
         }
         /// <summary>
         /// 
         /// </summary>
-        /// 
-        public void ShowPMFDataButton()
-        {
-            ShowPMFData = true;
-        }
-
-        // -----------------------------------------------------------------------------------------------------------------
-        // --------------------------------------------       Properties     -----------------------------------------------
-        // -----------------------------------------------------------------------------------------------------------------
-
         public bool ArePlanetary
         {
             get { return PlanetaryStations.Count > 0; }
         }
 
+
+        // -----------------------------------------------------------------------------------------------------------------
+        // --------------------------------------------       Properties     -----------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------
+
         private bool _showLoadText;
+        private bool _progressRingActive;
+        private bool _showPMFData;
+        private SystemOverviewModel _systemOverview;
+        private string _systemEconomy;
+        private string _pmfStatus;
+        private ObservableCollection<ClosePlayFactions> _closePMFs;
+        private ObservableCollection<ExpansionSystems> _expansionTargetSystems;
 
         public bool VisibilityState
         {
@@ -216,8 +213,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-        private bool _progressRingActive;
-
         public bool ProgressRingActive
         {
             get { return _progressRingActive; }
@@ -227,8 +222,6 @@ namespace DETrackerWPF.ViewModels
                 NotifyOfPropertyChange(() => ProgressRingActive);
             }
         }
-
-        private bool _showPMFData;
 
         public bool ShowPMFData
         {
@@ -240,15 +233,11 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-        private SystemOverviewModel _systemOverview;
-
         public SystemOverviewModel SystemOverview
         {
             get { return _systemOverview; }
             set { _systemOverview = value; }
         }
-
-        private string _systemEconomy;
 
         public string SystemEconomy
         {
@@ -260,8 +249,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-        private string _pmfStatus;
-
         public string PMFStatus
         {
             get { return _pmfStatus; }
@@ -272,9 +259,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-
-        private ObservableCollection<ClosePlayFactions> _closePMFs;
-
         public ObservableCollection<ClosePlayFactions> ClosePMFs
         {
             get { return _closePMFs; }
@@ -284,8 +268,6 @@ namespace DETrackerWPF.ViewModels
                 NotifyOfPropertyChange(() => ClosePMFs);
             }
         }
-
-        private ObservableCollection<ExpansionSystems> _expansionTargetSystems;
 
         public ObservableCollection<ExpansionSystems> ExpansionTargetSystems
         {
@@ -302,6 +284,5 @@ namespace DETrackerWPF.ViewModels
         public List<ClosePlayFactions> _closePlayerFactions { get; set; }
         public List<ExpansionSystems> _expansionSystems { get; set; }
         public PlotModel PlotModel { get; private set; }
-
     }
 }

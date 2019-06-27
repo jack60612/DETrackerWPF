@@ -161,7 +161,6 @@ namespace DETrackerWPF
                 FactionInfluenceChangeValue = infChange;
             }
         }
-
         /// <summary>
         /// Read tick time from Parms table  and return a string representation
         /// </summary>
@@ -183,7 +182,6 @@ namespace DETrackerWPF
                         }
                     }
                 }
-
                 sqlConnection.Close();
             }
             var tickTime = new TimeSpan(TickTimeHour, TickTimeMin, 00);
@@ -306,10 +304,11 @@ namespace DETrackerWPF
         /// <returns></returns>
         private ChangedSystemData MapDEUpdatedData(SqlDataReader reader)
         {
-            ChangedSystemData cd = new ChangedSystemData();
-            cd.StarSystem = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
-            cd.SystemAddress = reader.GetInt64(1);
-            cd.timestamp = reader.GetDateTime(2);
+            ChangedSystemData cd = new ChangedSystemData
+            {
+                StarSystem = reader.IsDBNull(0) ? string.Empty : reader.GetString(0),
+                SystemAddress = reader.GetInt64(1), timestamp = reader.GetDateTime(2)
+            };
             return cd;
         }
         /// <summary>
@@ -429,9 +428,6 @@ namespace DETrackerWPF
             vHist.Visted = new List<SystemsVisitHistory>();
 
             Int64 sysAddr = reader.GetInt64(0);
-            visitRec.StarSystem = reader.GetString(1);
-            visitRec.Visits = reader.GetInt32(2);
-            visitRec.timestamp = reader.GetDateTime(3);
 
             if (DeVisitsHistory.FirstOrDefault(x => x.SystemsAddress == sysAddr) == null)
             {
@@ -444,7 +440,16 @@ namespace DETrackerWPF
                 vHist = DeVisitsHistory.FirstOrDefault(x => x.SystemsAddress == sysAddr);
                 vHist.Visted.Add(visitRec);
             }
+
+            visitRec.StarSystem = reader.GetString(1);
+            visitRec.Visits = reader.GetInt32(2);
+            visitRec.timestamp = reader.GetDateTime(3);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sd"></param>
+        /// <returns></returns>
         public DarkEchoSystemsModel GetUpdatedSystem(DESystemsForDisplay sd)
         {
             return BuildDisplayLine(sd);
@@ -486,17 +491,18 @@ namespace DETrackerWPF
         /// <returns></returns>
         SystemOverviewModel MapSystemData(SqlDataReader reader)
         {
-            SystemOverviewModel so = new SystemOverviewModel();
-
-            so.SystemName = reader.GetString(0);
-            so.Allegiance = reader.GetString(1);
-            so.Government = Helper.Clean(reader.GetString(2));
-            so.Population = reader.GetInt64(3);
-            so.ControllingFaction = JsonConvert.DeserializeObject<SystemFaction>(reader.GetString(4)).Name;
-            so.SecurityLevel = Helper.Clean(reader.GetString(5));
-            so.EconomyPrimary = Helper.Clean(reader.GetString(6));
-            so.EconomySecondary = Helper.Clean(reader.GetString(7));
-            so.StarPos = (List<double>)JsonConvert.DeserializeObject(reader.GetString(8), typeof(List<double>));
+            SystemOverviewModel so = new SystemOverviewModel
+            {
+                SystemName = reader.GetString(0),
+                Allegiance = reader.GetString(1),
+                Government = Helper.Clean(reader.GetString(2)),
+                Population = reader.GetInt64(3),
+                ControllingFaction = JsonConvert.DeserializeObject<SystemFaction>(reader.GetString(4)).Name,
+                SecurityLevel = Helper.Clean(reader.GetString(5)),
+                EconomyPrimary = Helper.Clean(reader.GetString(6)),
+                EconomySecondary = Helper.Clean(reader.GetString(7)),
+                StarPos = (List<double>) JsonConvert.DeserializeObject(reader.GetString(8), typeof(List<double>))
+            };
 
             return so;
         }
@@ -534,14 +540,15 @@ namespace DETrackerWPF
         /// <returns></returns>
         StationList MapStations(SqlDataReader reader)
         {
-            StationList s = new StationList();
-
-            s.StationName = reader.GetString(0);
-            s.ControllingFaction = reader.IsDBNull(1) ? "Screw up" : reader.GetString(1);
-            s.StationType = reader.GetString(2);
-            s.IsPlantery = Convert.ToBoolean(reader.GetString(3));
-            s.MaxLandingPad = reader.GetString(4);
-            s.DistanceFromStar = reader.GetInt32(5);
+            StationList s = new StationList
+            {
+                StationName = reader.GetString(0),
+                ControllingFaction = reader.IsDBNull(1) ? "Screw up" : reader.GetString(1),
+                StationType = reader.GetString(2),
+                IsPlantery = Convert.ToBoolean(reader.GetString(3)),
+                MaxLandingPad = reader.GetString(4),
+                DistanceFromStar = reader.GetInt32(5)
+            };
 
             return s;
         }
@@ -574,10 +581,8 @@ namespace DETrackerWPF
                                 _closestPlayerFactions.Add(pf);
                             }
                         }
-
                         reader.Close();
                     }
-
                     sqlConnection.Close();
                 }
             }
@@ -592,16 +597,14 @@ namespace DETrackerWPF
         /// <returns></returns>
         private ClosePlayFactions MapClosePlayFactions(SqlDataReader reader)
         {
-            ClosePlayFactions cpf = new ClosePlayFactions();
-            cpf.StarPos = new List<double>();
-
-            cpf.SystemName = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
-            cpf.StarPos.Add(reader.GetDouble(1));
-            cpf.StarPos.Add(reader.GetDouble(2));
-            cpf.StarPos.Add(reader.GetDouble(3));
-            cpf.EddbID = reader.GetInt32(4);
-            cpf.ControllingFaction = reader.GetString(5);
-            cpf.ControllingFactionID = reader.GetInt32(6);
+            ClosePlayFactions cpf = new ClosePlayFactions
+            {
+                StarPos = new List<double> {reader.GetDouble(1), reader.GetDouble(2), reader.GetDouble(3)},
+                SystemName = reader.IsDBNull(0) ? string.Empty : reader.GetString(0),
+                EddbID = reader.GetInt32(4),
+                ControllingFaction = reader.GetString(5),
+                ControllingFactionID = reader.GetInt32(6)
+            };
 
             return cpf;
         }
@@ -637,7 +640,7 @@ namespace DETrackerWPF
 
             foreach (var exp in _allExpansionTargets)
             {
-                List<FactionsPresent> ffd = GetSystemsFactions(exp.id);
+                List<FactionsPresent> ffd = GetSystemsFactions(exp.EddbID);
 
                 if ((ffd.Count - 1) > 6)
                     continue;
@@ -688,14 +691,14 @@ namespace DETrackerWPF
         /// <returns></returns>
         private ExpansionSystems MapExpansionSystems(SqlDataReader reader)
         {
-
-            ExpansionSystems expSys = new ExpansionSystems();
-
-            expSys.SystemName = reader.GetString(0);
-            expSys.x = reader.GetDouble(1);
-            expSys.y = reader.GetDouble(2);
-            expSys.z = reader.GetDouble(3);
-            expSys.id = reader.GetInt32(4);
+            ExpansionSystems expSys = new ExpansionSystems
+            {
+                SystemName = reader.GetString(0),
+                x = reader.GetDouble(1),
+                y = reader.GetDouble(2),
+                z = reader.GetDouble(3),
+                EddbID = reader.GetInt32(4)
+            };
 
             return expSys;
         }

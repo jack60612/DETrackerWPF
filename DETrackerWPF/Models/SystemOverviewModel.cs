@@ -32,9 +32,6 @@ namespace DETrackerWPF.Models
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public class ClosePlayFactions
     {
         public string SystemName { get; set; }
@@ -43,5 +40,16 @@ namespace DETrackerWPF.Models
         public string ControllingFaction { get; set; }
         public int ControllingFactionID { get; set; }
         public double Distance { get; set; }
+    }
+
+    public class ExpansionSystems
+    {
+        public string SystemName { get; set; }
+        public int FactionsInSystem { get; set; }
+        public double x { get; set; }
+        public double y { get; set; }
+        public double z { get; set; }
+        public double Distance { get; set; }
+        public int EddbID { get; set; }
     }
 }
