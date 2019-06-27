@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -70,6 +71,12 @@ namespace DETrackerWPF.ViewModels
 
             DBAccessMode = "Access Mode : Local (Development DB)";
             DisplayTickTime = "Configured Tick Time : " + dataAccess.TickTime.ToString(@"H:mm UTC");
+
+            // Get the file version
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            WindowTitle = string.Format("Dark Echo Influence Tracker v{0} (Built {1})", version, DETrackerWPF.Properties.Resources.BuildDate);
 
             // Get DE systems, size main screen to suit
             displayDESystems = dataAccess.ReadDeSystemsTable();
@@ -431,6 +438,7 @@ namespace DETrackerWPF.ViewModels
         public System.Windows.Media.Imaging.BitmapImage SysInfo { get; set; }
         public System.Windows.Media.Imaging.BitmapImage SysHistory { get; set; }
 
+        public string WindowTitle { get; set; }
 
         public void Grid_SizeChanged()
         {

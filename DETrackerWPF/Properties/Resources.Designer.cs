@@ -101,6 +101,16 @@ namespace DETrackerWPF.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ECHO is on.
+        ///.
+        /// </summary>
+        internal static string BuildDate {
+            get {
+                return ResourceManager.GetString("BuildDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap DELogo {
