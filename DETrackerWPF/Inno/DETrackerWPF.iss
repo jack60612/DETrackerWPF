@@ -63,6 +63,11 @@ Source: "..\bin\Release\MahApps.Metro.dll"; DestDir: "{app}"; Flags: ignoreversi
 Source: "..\bin\Release\MahApps.Metro.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Release\ControlzEx.dll"; DestDir: "{app}"; Flags: ignoreversion
 
+Source: "..\bin\Release\AutoUpdater.NET.xml"; DestDir: "{app}"; Flags: ignoreversion
+
+
+
+
 ;Source: "..\bin\Release\AutoUpdater.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "..\bin\Release\AutoUpdater.NET.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\Key.txt"; Flags: dontcopy noencryption deleteafterinstall 
