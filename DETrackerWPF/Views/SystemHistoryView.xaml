@@ -117,6 +117,7 @@
         </Style>
 
     </Window.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -134,15 +135,12 @@
                 <RowDefinition Height="10" />
             </Grid.RowDefinitions>
 
-
             <!--Row 1   - Main Header -->
-
             <Border BorderBrush="Black" BorderThickness="1"  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4">
                 <StackPanel Background="{StaticResource BgBrush1}">
                     <TextBlock Text="{Binding Path=HeaderSummary}" VerticalAlignment="Center" Margin="5,5" TextAlignment="Center" FontSize="16" FontWeight="Bold" Height="48"></TextBlock>
                 </StackPanel>
             </Border>
-
 
             <Button x:Name="EliteBgsButton" 
                     Grid.Column="2" Grid.Row="1"
@@ -188,13 +186,11 @@
                 </Grid.RowDefinitions>
 
                 <!-- Row 0 - DE logo -->
-
                 <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="0.8" Width="80" Height="68" Background="{StaticResource FhBrush}" Margin="0" Grid.IsSharedSizeScope="True">
                     <Image x:Name="DeLogo"></Image>
                 </Border>
 
                 <!-- Row 0  Faction Headers -->
-
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" Grid.IsSharedSizeScope="True">
                     <ItemsControl x:Name="FactionsHeader" ItemsSource="{Binding Path=Factions}" Grid.IsSharedSizeScope="True">
                         <ItemsControl.ItemsPanel>
@@ -220,7 +216,6 @@
                 </StackPanel>
 
                 <!-- Row 1 - Data Headers -->
-
                 <Border Grid.Column="0" Grid.Row="1" BorderThickness="1" BorderBrush="Black" Width="80">
                     <TextBlock Width="78.6" Text="Date" FontSize="14" FontWeight="DemiBold" Padding="3" Background="Wheat"></TextBlock>
                 </Border>
@@ -266,7 +261,6 @@
                 </StackPanel>
 
                 <!-- Row 2 - The date column and history data -->
-
                 <ScrollViewer x:Name="SV" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"
                           VerticalScrollBarVisibility="Hidden"
                           HorizontalScrollBarVisibility="Disabled" 

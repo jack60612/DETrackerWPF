@@ -76,6 +76,7 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
         </Style>
 
+
     </Window.Resources>
 
     <Grid>
@@ -128,23 +129,9 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <!-- Star System Col 0 Row 1-->
-                <TextBlock Grid.Column="0" Grid.Row="1"
-                           FontWeight="DemiBold" FontSize="14" 
-                           Text="Star System:"
-                           MinWidth="100" MinHeight="20"
-                           TextAlignment="Right"
-                           Margin="0,0,5,0">
-
-                </TextBlock>
-                <TextBlock x:Name="SystemOverview_SystemName"
-                       Grid.Column="1" Grid.Row="1"
-                       FontWeight="DemiBold" FontSize="14"
-                       MinHeight="20">
-                </TextBlock>
 
                 <!-- Allegiance Col 0 Row 2 -->
-                <TextBlock Grid.Column="0" Grid.Row="2"
+                <TextBlock Grid.Column="0" Grid.Row="1"
                            FontWeight="DemiBold" FontSize="14" 
                            Text="Allegiance:"
                            MinWidth="100" MinHeight="20"
@@ -153,13 +140,13 @@
 
                 </TextBlock>
                 <TextBlock x:Name="SystemOverview_Allegiance"
-                           Grid.Column="1" Grid.Row="2"
-                           FontWeight="DemiBold" FontSize="14" 
+                           Grid.Column="1" Grid.Row="1"
+                           FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
                 </TextBlock>
 
                 <!-- Government Col 0 Row 3 -->
-                <TextBlock Grid.Column="0" Grid.Row="3"
+                <TextBlock Grid.Column="0" Grid.Row="2"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Government:"
                            MinWidth="100" MinHeight="20"
@@ -168,13 +155,13 @@
 
                 </TextBlock>
                 <TextBlock x:Name="SystemOverview_Government"
-                           Grid.Column="1" Grid.Row="3"
-                           FontWeight="DemiBold" FontSize="14"
+                           Grid.Column="1" Grid.Row="2"
+                           FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
                 </TextBlock>
 
                 <!-- Population Col 0 Row 4 -->
-                <TextBlock Grid.Column="0" Grid.Row="4"
+                <TextBlock Grid.Column="0" Grid.Row="3"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Population:"
                            MinWidth="100" MinHeight="20"
@@ -183,11 +170,41 @@
 
                 </TextBlock>
                 <TextBlock x:Name="SystemOverview_Population"
-                           Grid.Column="1" Grid.Row="4"
-                           FontWeight="DemiBold" FontSize="14"
+                           Grid.Column="1" Grid.Row="3"
+                           FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20"
                            Text="{Binding SystemOverview.Population, StringFormat={}{0:###,###,###}}">
                 </TextBlock>
+
+
+                <!-- Grid Col 2 Systems Name-->
+                <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="3"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        BorderBrush="Black" BorderThickness="1" CornerRadius="30"
+                        Background="{StaticResource BgBrush3}">
+                <TextBlock FontSize="36" FontWeight="DemiBold"
+                           Foreground="MediumBlue"
+                           Padding="30,0,30,5"
+                           Text="{Binding Path=SystemOverview.SystemName}" UseLayoutRounding="True">
+                    <TextBlock.Effect>
+                        <DropShadowEffect
+                            ShadowDepth="2"
+                            Direction="330"
+                            Color="Black"
+                            Opacity="0.5"
+                            BlurRadius="4"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+                    <Border.Effect>
+                        <DropShadowEffect
+                            ShadowDepth="4"
+                            Direction="330"
+                            Color="Black"
+                            Opacity="0.5"
+                            BlurRadius="4"/>
+                    </Border.Effect>
+                </Border>
+
 
                 <!-- Controlling Faction Col 1 Row 4 -->
                 <TextBlock Grid.Column="3" Grid.Row="1"
@@ -200,7 +217,7 @@
                 </TextBlock>
                 <TextBlock x:Name="SystemOverview_ControllingFaction"
                            Grid.Column="4" Grid.Row="1"
-                           FontWeight="DemiBold" FontSize="14"
+                           FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
                 </TextBlock>
 
@@ -215,7 +232,7 @@
                 </TextBlock>
                 <TextBlock x:Name="SystemOverview_SecurityLevel"
                            Grid.Column="4" Grid.Row="2"
-                           FontWeight="DemiBold" FontSize="14"
+                           FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
                 </TextBlock>
 
@@ -230,12 +247,11 @@
                 </TextBlock>
                 <TextBlock x:Name="SystemEconomy"
                            Grid.Column="4" Grid.Row="3"
-                           FontWeight="DemiBold" FontSize="14"
+                           FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
                 </TextBlock>
 
             </Grid>
-
 
         </StackPanel>
 

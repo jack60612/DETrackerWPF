@@ -22,19 +22,9 @@ namespace DETrackerWPF
     public class DataAccess : Screen
     {
 
-        // Backing Fields
-        private int _TickTimeHour;
-        private int _tickTimeMin;
-        private string _remoteConnectionString;
-        private string _localConnectionString;
-        private string _totalFactionInfluence;
-        private string _factionInfluenceChange;
-        private double _factionInfluenceChangeValue;
+
 
         // The Global SQL Connections stuff
-        private string connectionStringRemote = string.Empty;
-        private string connectionStringLocal = string.Empty;
-
         public static string connectionString = string.Empty;
 
         // Data Lists
@@ -46,8 +36,6 @@ namespace DETrackerWPF
         Helper helper = new Helper();
 
         private double[] disciLocation = new double[] { 16.03125, 97.59375, -29.59375 };
-
-        
 
         // ------------------------- Methods -----------------------------------
 
@@ -660,7 +648,6 @@ namespace DETrackerWPF
         /// <returns></returns>
         List<FactionsPresent> GetSystemsFactions(int systemID)
         {
-
             List<FactionsPresent> ffd = new List<FactionsPresent>();
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
@@ -1002,24 +989,25 @@ namespace DETrackerWPF
         /// <returns></returns>
         private DESystemsForDisplay MapDESystemsForDisplay(SqlDataReader reader)
         {
-            DESystemsForDisplay DESystem = new DESystemsForDisplay();
+            DESystemsForDisplay DESystem = new DESystemsForDisplay
+            {
+                StarSystem = reader.IsDBNull(0) ? string.Empty : reader.GetString(0),
+                SystemAddress = reader.GetInt64(1),
+                FactionHistory = (List<DESystemsHistory>) JsonConvert.DeserializeObject(reader.GetString(2), typeof(List<DESystemsHistory>)),
+                StarPos = (List<double>) JsonConvert.DeserializeObject(reader.GetString(3), typeof(List<double>)),
+                Visted = reader.GetInt32(4),
+                timestamp = reader.GetDateTime(5),
+                Population = reader.GetInt64(8),
+                SystemAllegiance = reader.IsDBNull(9) ? string.Empty : reader.GetString(9),
+                SystemEconomy = reader.IsDBNull(10) ? string.Empty : reader.GetString(10),
+                SystemGovernment = reader.IsDBNull(11) ? string.Empty : reader.GetString(11),
+                SystemSecondEconomy = reader.IsDBNull(12) ? string.Empty : reader.GetString(12),
+                SystemSecurity = reader.IsDBNull(13) ? string.Empty : reader.GetString(13),
+                Updated = false
+            };
 
-            DESystem.StarSystem = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
-            DESystem.SystemAddress = reader.GetInt64(1);
-            DESystem.FactionHistory = (List<DESystemsHistory>)JsonConvert.DeserializeObject(reader.GetString(2), typeof(List<DESystemsHistory>));
-            DESystem.StarPos = (List<double>)JsonConvert.DeserializeObject(reader.GetString(3), typeof(List<double>));
-            DESystem.Visted = reader.GetInt32(4);
-            DESystem.timestamp = reader.GetDateTime(5);
             if (!reader.IsDBNull(7))
                 DESystem.SysFaction = JsonConvert.DeserializeObject<SystemFaction>(reader.GetString(7));
-            DESystem.Population = reader.GetInt64(8);
-            DESystem.SystemAllegiance = reader.IsDBNull(9) ? string.Empty : reader.GetString(9);
-            DESystem.SystemEconomy = reader.IsDBNull(10) ? string.Empty : reader.GetString(10);
-            DESystem.SystemGovernment = reader.IsDBNull(11) ? string.Empty : reader.GetString(11);
-            DESystem.SystemSecondEconomy = reader.IsDBNull(12) ? string.Empty : reader.GetString(12);
-            DESystem.SystemSecurity = reader.IsDBNull(13) ? string.Empty : reader.GetString(13);
-            // On inital read set update flag to false
-            DESystem.Updated = false;
 
             //splashMessage = "Retrieving Systems: " + DESystem.StarSystem;
             return DESystem;
@@ -1064,13 +1052,32 @@ namespace DETrackerWPF
             SqlDependency.Start(connectionString);
         }
 
+
+        // -----------------------------------------------------------------------------------------------------------------
+        // --------------------------------------------       Properties     -----------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------
+
+        // Backing Fields
+        private int _tickTimeHour;
+        private int _tickTimeMin;
+        private string _remoteConnectionString;
+        private string _localConnectionString;
+        private string _totalFactionInfluence;
+        private string _factionInfluenceChange;
+        private double _factionInfluenceChangeValue;
         private List<VisitHistory> _deVisitHistory;
+        private List<DESystemsForDisplay> _displayDeSystems;
+        private bool _systemUpdated;
+        private ObservableCollection<FactionHistData> _faction1;
+        private DateTime _tickTime;
+        private string _closelFactionStatus;
+
         public List<VisitHistory> DeVisitsHistory
         {
             get { return _deVisitHistory; }
             set { _deVisitHistory = value; }
         }
-        private List<DESystemsForDisplay> _displayDeSystems;
+
         public List<DESystemsForDisplay> displayDESystems
         {
             get { return _displayDeSystems; }
@@ -1078,15 +1085,15 @@ namespace DETrackerWPF
         }
         public int TickTimeHour
         {
-            get { return _TickTimeHour; }
-            set { _TickTimeHour = value; }
+            get { return _tickTimeHour; }
+            set { _tickTimeHour = value; }
         }
         public int TickTimeMin
         {
             get { return _tickTimeMin; }
             set { _tickTimeMin = value; }
         }
-        private bool _systemUpdated;
+
         public bool SystemUpdated
         {
             get { return _systemUpdated; }
@@ -1123,27 +1130,25 @@ namespace DETrackerWPF
             get { return _factionInfluenceChangeValue; }
             set { _factionInfluenceChangeValue = value; }
         }
-        private ObservableCollection<FactionHistData> _faction1;
+
         public ObservableCollection<FactionHistData> Faction1
         {
             get { return _faction1; }
             set { _faction1 = value; }
         }
-        private DateTime _tickTime;
+
         public DateTime TickTime
         {
             get { return _tickTime; }
             set { _tickTime = value; }
         }
 
-        private string _closelayFactionStatus;
-
         public string ClosePMFStatus
         {
-            get { return _closelayFactionStatus; }
+            get { return _closelFactionStatus; }
             set
             {
-                _closelayFactionStatus = value;
+                _closelFactionStatus = value;
                 NotifyOfPropertyChange(() => ClosePMFStatus);
             }
         }
