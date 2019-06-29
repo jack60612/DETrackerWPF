@@ -129,8 +129,6 @@ namespace DETrackerWPF.ViewModels
     /// <param name="stateToDisplay"></param>
     public void DisplayHistoryData(DESystemsForDisplay DESystem, string stateToDisplay)
     {
-      int fIndex;
-
       // Get the history list and reverse sort so latest is first.
       List<DESystemsHistory> sysHist = new List<DESystemsHistory>(DESystem.FactionHistory);
       sysHist = sysHist.OrderByDescending(r => r.timestamp).ToList();

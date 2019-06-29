@@ -47,9 +47,6 @@ namespace DETrackerWPF
         {
             double dayMinus1Inf = 0.0;
             double dayMinus2Inf = 0.0;
-            double todaysTotalInf = 0.0;
-
-            
 
             // Tick Not Happened so we just display data for the previous tick.
             foreach (var sd in displayDESystems)
@@ -88,7 +85,6 @@ namespace DETrackerWPF
         public void CalculateAverageChange()
         {
             double dayMinus1Inf = 0.0;
-            double dayMinus2Inf = 0.0;
             double todaysTotalInf = 0.0;
 
             // Are we past tick time?
@@ -116,10 +112,6 @@ namespace DETrackerWPF
                             {
                                 histRec = sd.FactionHistory[sd.FactionHistory.FindIndex(x => x.timestamp.Date == DateTime.UtcNow.AddDays(-1).Date)];
                                 todaysTotalInf = todaysTotalInf + (histRec.Factions[histRec.Factions.FindIndex(x => x.Name == "Dark Echo")].Influence * 100);
-                            }
-                            else
-                            {
-                                dayMinus1Inf = dayMinus1Inf + (histRec.Factions[histRec.Factions.FindIndex(x => x.Name == "Dark Echo")].Influence * 100);
                             }
                         }
                     }
@@ -756,6 +748,8 @@ namespace DETrackerWPF
             dd.fInf = (Convert.ToSingle(dd.fi, new CultureInfo("en-US")) * 100.0f).ToString("F");
             dd.fGap = (Convert.ToSingle((dd.ourInf - dd.closest), new CultureInfo("en-US")) * 100.0f).ToString("F");
             dd.iChange = (Convert.ToSingle((dd.fi - dd.fiPrev), new CultureInfo("en-US")) * 100.0f).ToString("F");
+            if (sd.FactionHistory.Count == 1)
+                dd.iChange = (Convert.ToSingle(dd.fi, new CultureInfo("en-US")) * 100.0f).ToString("F");
             dd.iChangePrev = (Convert.ToSingle((dd.fiPrev - dd.fiPrevMinus2), new CultureInfo("en-US")) * 100.0f).ToString("F");
 
             // Set image index for Inf Change

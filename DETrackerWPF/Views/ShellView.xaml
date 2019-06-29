@@ -15,6 +15,27 @@
 
     <Window.Resources>
 
+        <Style TargetType="{x:Type ToolTip}" x:Key="MyToolTipStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                        <Border Background="DarkSlateGray" BorderBrush="DarkGoldenrod" BorderThickness="1" CornerRadius="2">
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ToolTip">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Offset="0" Color="Yellow"/>
             <GradientStop Offset="1" Color="BurlyWood"/>
@@ -140,34 +161,101 @@
             </Setter>
         </Style>
 
+        <Style x:Key="TooltipTextBlock" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight" Value="DemiBold"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="TextAlignment" Value="Left"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+
         <Style x:Key="DataGridCellCentered" TargetType="DataGridCell">
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <Border Background="Wheat" BorderBrush="DarkGoldenrod" BorderThickness="1" CornerRadius="2">
+                        <TextBlock Text="{Binding ToolTipText}"
+                               Style="{StaticResource TooltipTextBlock}">
+                        </TextBlock>
+                    </Border>
+                </Setter.Value>
+            </Setter>
             <Setter Property="TextBlock.TextAlignment" Value="Center" />
             <Setter Property="Foreground" Value="MediumBlue"></Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding NotControlledSystem}" Value="False">
                     <Setter Property="Foreground" Value="Red"/>
                 </DataTrigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="{x:Type ToolTip}" x:Key="MyToolTipStyle">
-            <Setter Property="Template">
+        <Style x:Key="DataGridCellLeft" TargetType="DataGridCell">
+            <Setter Property="ToolTip">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToolTip}">
-                        <Border Background="DarkSlateGray" BorderBrush="DarkGoldenrod" BorderThickness="1" CornerRadius="2">
-                        </Border>
-                    </ControlTemplate>
+                    <Border Background="Wheat" BorderBrush="DarkGoldenrod" BorderThickness="1" CornerRadius="2">
+                        <TextBlock Text="{Binding ToolTipText}"
+                               Style="{StaticResource TooltipTextBlock}">
+                        </TextBlock>
+                    </Border>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style x:Key="DataGridCellLeft" TargetType="DataGridCell">
             <Setter Property="TextBlock.TextAlignment" Value="Left" />
             <Setter Property="Foreground"  Value="MediumBlue"></Setter>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding NotControlledSystem}" Value="False">
                     <Setter Property="Foreground" Value="Red"/>
                 </DataTrigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DataGridCellInfoButton" TargetType="DataGridCell">
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <Border Background="Wheat" BorderBrush="DarkGoldenrod" BorderThickness="1" CornerRadius="2">
+                        <TextBlock Text="Show system Information"
+                               Style="{StaticResource TooltipTextBlock}">
+                        </TextBlock>
+                    </Border>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Left" />
+            <Setter Property="Foreground"  Value="MediumBlue"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NotControlledSystem}" Value="False">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DataGridCellHistoryButton" TargetType="DataGridCell">
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <Border Background="Wheat" BorderBrush="DarkGoldenrod" BorderThickness="1" CornerRadius="2">
+                        <TextBlock Text="System Faction History for the past 30 days"
+                               Style="{StaticResource TooltipTextBlock}"/>
+                    </Border>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Left" />
+            <Setter Property="Foreground"  Value="MediumBlue"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding NotControlledSystem}" Value="False">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                </Trigger>
             </Style.Triggers>
         </Style>
 
@@ -181,14 +269,6 @@
 
         <Style x:Key="HighlightRow" TargetType="{x:Type DataGridRow}">
             <Setter Property="cal:Message.Attach" Value="[MouseDoubleClick] = [Action RowSelect($dataContext)]"/>
-            <Setter Property="ToolTip">
-                <Setter.Value>
-                    <TextBlock Text="{Binding ToolTipText}"
-                               FontSize="14" FontWeight="DemiBold"
-                               Margin="5">
-                        </TextBlock>
-                </Setter.Value>
-            </Setter>           
             <Style.Triggers>
                 <DataTrigger Binding="{Binding HighLight}" Value="True">
                     <Setter Property="Background" Value="{StaticResource BgBrush1}" />
@@ -197,7 +277,6 @@
         </Style>
 
     </Window.Resources>
-
 
     <Grid cal:Message.Attach="[Event SizeChanged] = [Action Grid_SizeChanged()]">
 
@@ -227,13 +306,14 @@
                   CanUserAddRows="False" 
                   CanUserResizeColumns="False" 
                   CanUserReorderColumns="False"
-                  IsReadOnly="True" AutoGenerateColumns="False" 
+                  IsReadOnly="True" AutoGenerateColumns="False"
                   ColumnHeaderStyle="{StaticResource WrapAlignCenterBottom}"  
                   FontSize="12" FontWeight="Bold"
                   GridLinesVisibility="None"
                   RowStyle="{StaticResource HighlightRow}" 
                   CellStyle="{StaticResource DataGridCellCentered}"
                   Background="Transparent"
+                  HeadersVisibility="Column"
                   Tag="{Binding Path=DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}">
 
 
@@ -264,22 +344,44 @@
                 </Style>
             </DataGrid.Style>
 
-            <!--<DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Background="Orange">
-                    <TextBlock Background="Orange" Text="{Binding ToolTipText}" TextWrapping="Wrap"
-                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                    <Button Style="{StaticResource RoundCorner}" x:Name="Refresh" Margin="5" Width="70" HorizontalAlignment="Center" Height="20">Refresh</Button>
-                    <Button Style="{StaticResource RoundCorner}" x:Name="Analytics" Content="Analytics" Grid.Column="2" Grid.Row="2" Margin="5" Width="70" HorizontalAlignment="Center" Height="20"></Button>
-                    </StackPanel>
-
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>-->
-
             <DataGrid.Columns>
+                <!-- System Overview Button -->
+                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCellInfoButton}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="SystemInfo"
+                                    cal:Message.Attach="SystemInfo($dataContext)" 
+                                    cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}">
+
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="../Resources/InfoBlue.png" Width="18" Height="18" Margin="0,0,5,0"></Image>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Systems History Button -->
+                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCellHistoryButton}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="History"
+                                    cal:Message.Attach="History($dataContext)" 
+                                    cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="../Resources/analytics.png"  Width="18" Height="18" Margin="0,0,5,0"></Image>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
                 <DataGridTextColumn  Header="System" Binding="{Binding Path=StarSystemName}" Width="130" 
-                                    CellStyle="{StaticResource DataGridCellLeft}"/>
+                                     CellStyle="{StaticResource DataGridCellLeft}"/>
 
                 <DataGridTemplateColumn Header="" CellTemplate="{StaticResource ImageCellTemplateInf}" HeaderStyle="{StaticResource WrapAlignLeftBottom}"/>
 
@@ -318,10 +420,12 @@
 
                 <DataGridTextColumn Header="Factions" Binding="{Binding Path=FactionsInSystem }" Width="53"></DataGridTextColumn>
 
-
             </DataGrid.Columns>
 
         </DataGrid>
+
+        <!--cal:Message.Attach="History($dataContext)" 
+        cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}" >-->
 
         <!-- Grid Row 1 -->
         <Button Style="{StaticResource RoundCorner}" x:Name="Analytics" Content="Analytics" Grid.Column="2" Grid.Row="2" Margin="5" Width="70" HorizontalAlignment="Center" Height="20"></Button>

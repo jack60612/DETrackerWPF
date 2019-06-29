@@ -47,8 +47,9 @@ namespace DETrackerWPF.ViewModels
 
         Helper helper = new Helper();
 
+        private readonly int DefaultWidth = 1358;
+
         // Test stuff - Remember to remove
-        int row = 0;
         private readonly IWindowManager _windowManager;
 
         [ImportingConstructor]
@@ -80,9 +81,9 @@ namespace DETrackerWPF.ViewModels
 
             // Get DE systems, size main screen to suit
             displayDESystems = dataAccess.ReadDeSystemsTable();
-            Width = 1320;
+            Width = DefaultWidth;
             MaxWidth = Width;
-            Height = (displayDESystems.Count * 23) + 6;
+            Height = (displayDESystems.Count * 23);
             MaxHeight = Height;
 
             // Build the summary line
@@ -232,6 +233,16 @@ namespace DETrackerWPF.ViewModels
         {
             WindowManager windowManager = new WindowManager();
             windowManager.ShowWindow(new SystemHistoryViewModel(GetSystemAddress(sender), displayDESystems), null, null);
+        }
+        public void History(DarkEchoSystemsModel SelectedSystem)
+        {
+            RowSelect(SelectedSystem);
+        }
+
+        public void SystemInfo(DarkEchoSystemsModel SelectedSystem)
+        {
+            WindowManager windowManager = new WindowManager();
+            windowManager.ShowWindow(new SystemDetailViewModel(displayDESystems, SelectedSystem.StarSystemName), null, null);
         }
         /// <summary>
         /// 
@@ -444,20 +455,19 @@ namespace DETrackerWPF.ViewModels
         {
             if (Height < MaxHeight)
             {
-                if (Width >= 1320 && Width != 1337)
+                if (Width >= DefaultWidth && Width != (DefaultWidth + 18))
                 {
-                    Width = 1337;
+                    Width = (DefaultWidth + 18);
                     MaxWidth = Width;
                 }
             }
 
-            if (Height == MaxHeight && Width == 1337)
+            if (Height == MaxHeight && Width == (DefaultWidth + 18))
             {
-                Width = 1320;
+                Width = DefaultWidth;
                 MaxWidth = Width;
             }
         }
-
 
     }
 }

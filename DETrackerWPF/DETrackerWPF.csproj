@@ -223,10 +223,10 @@
     <None Include="Resources\Up_Green.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\InfoBlue.png" />
+    <Resource Include="Resources\InfoBlue.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\analytics.png" />
+    <Resource Include="Resources\analytics.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EliteBGS.png" />
