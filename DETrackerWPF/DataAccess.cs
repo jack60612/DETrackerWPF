@@ -22,8 +22,6 @@ namespace DETrackerWPF
     public class DataAccess : Screen
     {
 
-
-
         // The Global SQL Connections stuff
         public static string connectionString = string.Empty;
 
@@ -71,13 +69,14 @@ namespace DETrackerWPF
                 }
             }
 
+            // Calculate Average and Influence change for today
             var avgInfForDayMinus1 = dayMinus1Inf / displayDESystems.Count;
             var infChange = dayMinus1Inf - dayMinus2Inf;
 
+            // Set the properties 
             TotalFactionInfluence = string.Format("Average Faction Influence : {0:0.##}%", avgInfForDayMinus1);
             FactionInfluenceChange = string.Format("Total Influence Change : {0:0.##}%", infChange);
             FactionInfluenceChangeValue = infChange;
-
         }
         /// <summary>
         /// Get the average influence change across all systems between now and previous day
