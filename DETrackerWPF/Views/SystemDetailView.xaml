@@ -288,7 +288,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Faction" Binding="{Binding Path=ControllingFaction}"/>
                         <DataGridTextColumn Header="System" Binding="{Binding Path=SystemName}"/>
-                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ls'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
+                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ly'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
                     </DataGrid.Columns>
 
                 </DataGrid>
@@ -313,7 +313,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="System" Binding="{Binding Path=SystemName}"/>
                         <DataGridTextColumn Header="Factions" Binding="{Binding Path=FactionsInSystem}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ls'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
+                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ly'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
