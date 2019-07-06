@@ -188,8 +188,8 @@
           <Setter Property="Foreground" Value="Red"/>
         </DataTrigger>
         <Trigger Property="IsSelected" Value="True">
-          <Setter Property="Background" Value="PowderBlue" />
-          <Setter Property="BorderBrush" Value="PowderBlue" />
+          <Setter Property="Background" Value="{x:Null}" />
+          <Setter Property="BorderBrush" Value="{x:Null}" />
         </Trigger>
       </Style.Triggers>
     </Style>
@@ -211,8 +211,8 @@
           <Setter Property="Foreground" Value="Red"/>
         </DataTrigger>
         <Trigger Property="IsSelected" Value="True">
-          <Setter Property="Background" Value="PowderBlue" />
-          <Setter Property="BorderBrush" Value="PowderBlue"/>
+          <Setter Property="Background" Value="{x:Null}" />
+          <Setter Property="BorderBrush" Value="{x:Null}" />
         </Trigger>
       </Style.Triggers>
     </Style>
@@ -234,8 +234,8 @@
           <Setter Property="Foreground" Value="Red"/>
         </DataTrigger>
         <Trigger Property="IsSelected" Value="True">
-          <Setter Property="Background" Value="PowderBlue" />
-          <Setter Property="BorderBrush" Value="PowderBlue" />
+          <Setter Property="Background" Value="{x:Null}" />
+          <Setter Property="BorderBrush" Value="{x:Null}" />
         </Trigger>
       </Style.Triggers>
     </Style>
@@ -256,8 +256,8 @@
           <Setter Property="Foreground" Value="Red"/>
         </DataTrigger>
         <Trigger Property="IsSelected" Value="True">
-          <Setter Property="Background" Value="PowderBlue"/>
-          <Setter Property="BorderBrush" Value="PowderBlue" />
+          <Setter Property="Background" Value="{x:Null}" />
+          <Setter Property="BorderBrush" Value="{x:Null}" />
         </Trigger>
       </Style.Triggers>
     </Style>
@@ -276,11 +276,14 @@
         <DataTrigger Binding="{Binding HighLight}" Value="True">
           <Setter Property="Background" Value="{StaticResource BgBrush1}" />
         </DataTrigger>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="PowderBlue" />
+          <Setter Property="BorderBrush" Value="PowderBlue"/>
+        </Trigger>
       </Style.Triggers>
     </Style>
 
   </Window.Resources>
-
 
   <!-- cal:Message.Attach="[Event SizeChanged] = [Action Grid_SizeChanged()]" -->
   <Grid cal:Message.Attach="[Event SizeChanged] = [Action Grid_SizeChanged()]">
