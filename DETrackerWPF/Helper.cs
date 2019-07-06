@@ -6,7 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Caliburn.Micro;
 
 namespace DETrackerWPF
 {
@@ -48,5 +52,19 @@ namespace DETrackerWPF
                 return workStr;
             }
         }
+
+        public static void TransformToPixels(double unitX, double unitY, 
+            out int pixelX,
+            out int pixelY)
+        {
+            using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
+            {
+                pixelX = (int)((g.DpiX / 96) * unitX);
+                pixelY = (int)((g.DpiY / 96) * unitY);
+            }
+
+        }
+
+
     }
 }

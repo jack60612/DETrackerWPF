@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Xml.Serialization;
+using AutoUpdaterDotNET;
 using Caliburn.Micro;
 using DETrackerWPF.Models;
 using MahApps.Metro.Controls;
@@ -29,17 +31,6 @@ namespace DETrackerWPF.ViewModels
 
         DataAccess dataAccess = new DataAccess();
 
-        private BindableCollection<DarkEchoSystemsModel> _darkEchoSystems = new BindableCollection<DarkEchoSystemsModel>();
-        private string _displayTickTime;
-        private string _dBAccessMode;
-        private string _factionSummary;
-        private int _height;
-        private int _maxHeight;
-        private int _maxWidth;
-        private string _totalFactionInfluence;
-        private string _factionInfluenceChange;
-        private string _infChangeBackgroundColour;
-
         public List<DESystemsForDisplay> displayDESystems = new List<DESystemsForDisplay>();
         public List<DESystemsForDisplay> UpdatedDisplayDESystems = new List<DESystemsForDisplay>();
 
@@ -47,7 +38,7 @@ namespace DETrackerWPF.ViewModels
 
         Helper helper = new Helper();
 
-        private readonly int DefaultWidth = 1358;
+        private readonly int DefaultWidth = 1315;
 
         // Test stuff - Remember to remove
         private readonly IWindowManager _windowManager;
@@ -57,6 +48,10 @@ namespace DETrackerWPF.ViewModels
         {
 
             _windowManager = windowManager;
+
+            // Now Check for update
+            //AutoUpdater.ReportErrors = true;
+            AutoUpdater.Start("https://www.darkecho.space/update/DETracker/DETracker.xml");
 
             UpTriangle = helper.Convert(DETrackerWPF.Properties.Resources.UpTriangle);
             DownTriangle = helper.Convert(DETrackerWPF.Properties.Resources.DownTriangle);
@@ -70,7 +65,7 @@ namespace DETrackerWPF.ViewModels
             // Read the time of the tick
             dataAccess.GetTickTime();
 
-            DBAccessMode = "Access Mode : Local (Development DB)";
+            DBAccessMode = "Access Mode : Live DB";
             DisplayTickTime = "Configured Tick Time : " + dataAccess.TickTime.ToString(@"H:mm UTC");
 
             // Get the file version
@@ -81,9 +76,24 @@ namespace DETrackerWPF.ViewModels
 
             // Get DE systems, size main screen to suit
             displayDESystems = dataAccess.ReadDeSystemsTable();
+
+            // sort out the size
+
+
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenhight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            Helper.TransformToPixels(screenhight, screenWidth, out int ScreenHeight, out int ScreenWidth);
+
             Width = DefaultWidth;
             MaxWidth = Width;
-            Height = (displayDESystems.Count * 23);
+            if (ScreenHeight < (displayDESystems.Count * 16) + 259)
+                Height = ScreenHeight;
+            else
+                Height = ((displayDESystems.Count * 16) + 259);
+
+            // Frig to stop scroll bars appearing when a systems updates and sorting on update time
+            Height = Height + 18;
+
             MaxHeight = Height;
 
             // Build the summary line
@@ -123,7 +133,6 @@ namespace DETrackerWPF.ViewModels
                 DarkEchoSystems.Add(dataAccess.BuildDisplayLine(sd));
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -277,6 +286,45 @@ namespace DETrackerWPF.ViewModels
         {
             DarkEchoSystems[row].HighLight = false;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Grid_SizeChanged()
+        {
+            if (Height < MaxHeight)
+            {
+                if ((Width + 2) >= DefaultWidth && Width != (DefaultWidth + 18))
+                {
+                    Width = (DefaultWidth + 18);
+                    MaxWidth = Width;
+                }
+            }
+
+            if (Height == MaxHeight && Width == (DefaultWidth + 18))
+            {
+                Width = DefaultWidth;
+                MaxWidth = Width;
+            }
+        }
+
+        // -----------------------------------------------------------------------------------------------------------------
+        // --------------------------------------------       Properties     -----------------------------------------------
+        // -----------------------------------------------------------------------------------------------------------------
+
+        private BindableCollection<DarkEchoSystemsModel> _darkEchoSystems = new BindableCollection<DarkEchoSystemsModel>();
+        private string _displayTickTime;
+        private string _dBAccessMode;
+        private string _factionSummary;
+        private int _height;
+        private int _width;
+        private int _maxHeight;
+        private int _maxWidth;
+        private string _totalFactionInfluence;
+        private string _factionInfluenceChange;
+        private string _infChangeBackgroundColour;
+        private int _systemsUp;
+        private int _systemsDown;
+        private int _systemsNoChange;
 
         public BindableCollection<DarkEchoSystemsModel> DarkEchoSystems
         {
@@ -288,9 +336,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public string DisplayTickTime
         {
             get { return _displayTickTime; }
@@ -311,7 +356,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-
         public string FactionSummary
         {
             get { return _factionSummary; }
@@ -322,17 +366,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void UpdateTickTime()
-        {
-            DisplayTickTime = "Configured Tick Time : 17:30 UTC";
-        }
-
-
-        private int _width;
-
         public int Width
         {
             get { return _width; }
@@ -342,7 +375,6 @@ namespace DETrackerWPF.ViewModels
                 NotifyOfPropertyChange(() => Width);
             }
         }
-
 
         public int Height
         {
@@ -363,7 +395,6 @@ namespace DETrackerWPF.ViewModels
                 NotifyOfPropertyChange(() => MaxWidth);
             }
         }
-
 
         public int MaxHeight
         {
@@ -405,8 +436,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-        private int _systemsUp;
-
         public int SystemsUp
         {
             get { return _systemsUp; }
@@ -416,8 +445,6 @@ namespace DETrackerWPF.ViewModels
                 NotifyOfPropertyChange(() => SystemsUp);
             }
         }
-
-        private int _systemsDown;
 
         public int SystemsDown
         {
@@ -429,9 +456,6 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-
-        private int _systemsNoChange;
-
         public int SystemsNoChange
         {
             get { return _systemsNoChange; }
@@ -442,32 +466,12 @@ namespace DETrackerWPF.ViewModels
             }
         }
 
-
         public System.Windows.Media.Imaging.BitmapImage UpTriangle { get; set; }
         public System.Windows.Media.Imaging.BitmapImage DownTriangle { get; set; }
         public System.Windows.Media.Imaging.BitmapImage NoChange { get; set; }
         public System.Windows.Media.Imaging.BitmapImage SysInfo { get; set; }
         public System.Windows.Media.Imaging.BitmapImage SysHistory { get; set; }
-
         public string WindowTitle { get; set; }
-
-        public void Grid_SizeChanged()
-        {
-            if (Height < MaxHeight)
-            {
-                if (Width >= DefaultWidth && Width != (DefaultWidth + 18))
-                {
-                    Width = (DefaultWidth + 18);
-                    MaxWidth = Width;
-                }
-            }
-
-            if (Height == MaxHeight && Width == (DefaultWidth + 18))
-            {
-                Width = DefaultWidth;
-                MaxWidth = Width;
-            }
-        }
 
     }
 }

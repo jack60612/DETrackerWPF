@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DETrackerWPF.Views"
         xmlns:cal="http://www.caliburnproject.org"
+        xmlns:deTrackerWpf="clr-namespace:DETrackerWPF"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" 
-        Height="{Binding Height,Mode=TwoWay}"
         MaxHeight="{Binding MaxHeight, Mode=TwoWay}"
-        Width="{Binding Width, Mode=TwoWay}"
         MaxWidth="{Binding MaxWidth, Mode=TwoWay}" 
-        WindowStartupLocation="CenterScreen" Icon="/DETrackerWPF;component/Inno/GFX/squadronkraken_small.ico">
+        Width="{Binding Width, Mode=TwoWay}"
+        Height="{Binding Height,Mode=TwoWay}"
+        WindowStartupLocation="CenterScreen" 
+        Icon="/DETrackerWPF;component/Inno/GFX/squadronkraken_small.ico" 
+        SizeToContent="WidthAndHeight">
 
     <Window.Resources>
 
@@ -260,11 +263,11 @@
         </Style>
 
         <DataTemplate x:Key="ImageCellTemplateInf">
-            <Image Source="{Binding InfluenceChangeImage}" Width="18"/>
+            <Image Source="{Binding InfluenceChangeImage}" Width="16"/>
         </DataTemplate>
 
         <DataTemplate x:Key="ImageCellTemplateTick">
-            <Image Source="{Binding TickStatusImage}" Width="18"/>
+            <Image Source="{Binding TickStatusImage}" Width="16"/>
         </DataTemplate>
 
         <Style x:Key="HighlightRow" TargetType="{x:Type DataGridRow}">
@@ -278,6 +281,8 @@
 
     </Window.Resources>
 
+
+    <!-- cal:Message.Attach="[Event SizeChanged] = [Action Grid_SizeChanged()]" -->
     <Grid cal:Message.Attach="[Event SizeChanged] = [Action Grid_SizeChanged()]">
 
         <Grid.ColumnDefinitions>
@@ -308,7 +313,7 @@
                   CanUserReorderColumns="False"
                   IsReadOnly="True" AutoGenerateColumns="False"
                   ColumnHeaderStyle="{StaticResource WrapAlignCenterBottom}"  
-                  FontSize="12" FontWeight="Bold"
+                  FontWeight="Bold"
                   GridLinesVisibility="None"
                   RowStyle="{StaticResource HighlightRow}" 
                   CellStyle="{StaticResource DataGridCellCentered}"
@@ -345,53 +350,19 @@
             </DataGrid.Style>
 
             <DataGrid.Columns>
-                <!-- System Overview Button -->
-                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCellInfoButton}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="SystemInfo"
-                                    cal:Message.Attach="SystemInfo($dataContext)" 
-                                    cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}">
-
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Image Source="../Resources/InfoBlue.png" Width="18" Height="18" Margin="0,0,5,0"></Image>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <!-- Systems History Button -->
-                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCellHistoryButton}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="History"
-                                    cal:Message.Attach="History($dataContext)" 
-                                    cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Image Source="../Resources/analytics.png"  Width="18" Height="18" Margin="0,0,5,0"></Image>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
 
                 <DataGridTextColumn  Header="System" Binding="{Binding Path=StarSystemName}" Width="130" 
                                      CellStyle="{StaticResource DataGridCellLeft}"/>
 
                 <DataGridTemplateColumn Header="" CellTemplate="{StaticResource ImageCellTemplateInf}" HeaderStyle="{StaticResource WrapAlignLeftBottom}"/>
 
-                <DataGridTextColumn Header="Distance From Disci" Binding="{Binding Path=DistanceFromDisci}" Width="70" HeaderStyle="{StaticResource WrapAlignLeftBottom}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Distance From Disci" Binding="{Binding Path=DistanceFromDisci}" Width="60" HeaderStyle="{StaticResource WrapAlignLeftBottom}"></DataGridTextColumn>
 
-                <DataGridTextColumn Header="Influence" Binding="{Binding Path=DarkEchoInfluence, StringFormat={}{0:#0.00'%'}}" Width="70"></DataGridTextColumn>
+                <DataGridTextColumn Header="Influence" Binding="{Binding Path=DarkEchoInfluence, StringFormat={}{0:#0.00'%'}}" Width="60"></DataGridTextColumn>
 
-                <DataGridTextColumn Header="Change" Binding="{Binding Path=InfluenceChange,StringFormat={}{0:#0.00'%'}}" Width="70"></DataGridTextColumn>
+                <DataGridTextColumn Header="Change" Binding="{Binding Path=InfluenceChange,StringFormat={}{0:#0.00'%'}}" Width="60"></DataGridTextColumn>
 
-                <DataGridTextColumn Header="Gap" Binding="{Binding Path=GapToNextFaction,StringFormat={}{0:#0.00'%'}}" Width="70"></DataGridTextColumn>
+                <DataGridTextColumn Header="Gap" Binding="{Binding Path=GapToNextFaction,StringFormat={}{0:#0.00'%'}}" Width="60"></DataGridTextColumn>
 
                 <DataGridTextColumn Header="Active State(s)" Binding="{Binding Path=ActiveStates }" Width="190" 
                                     HeaderStyle="{StaticResource WrapAlignLeftBottom}" 
@@ -420,12 +391,45 @@
 
                 <DataGridTextColumn Header="Factions" Binding="{Binding Path=FactionsInSystem }" Width="53"></DataGridTextColumn>
 
+                <!-- System Overview Button -->
+                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCellInfoButton}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="SystemInfo"
+                                    cal:Message.Attach="SystemInfo($dataContext)" 
+                                    cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}">
+
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="../Resources/InfoBlue.png" Width="16" Height="16" Margin="0,0,5,0"></Image>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Systems History Button -->
+                <DataGridTemplateColumn CellStyle="{StaticResource DataGridCellHistoryButton}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="History"
+                                    cal:Message.Attach="History($dataContext)" 
+                                    cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="../Resources/analytics.png"  Width="16" Height="16" Margin="0,0,5,0"></Image>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
             </DataGrid.Columns>
 
         </DataGrid>
-
-        <!--cal:Message.Attach="History($dataContext)" 
-        cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DarkEchoSystems}" >-->
 
         <!-- Grid Row 1 -->
         <Button Style="{StaticResource RoundCorner}" x:Name="Analytics" Content="Analytics" Grid.Column="2" Grid.Row="2" Margin="5" Width="70" HorizontalAlignment="Center" Height="20"></Button>
@@ -434,7 +438,6 @@
         <TextBlock x:Name="DisplayTickTime"  Grid.Column="1" Grid.Row="3" Margin="5,0" VerticalAlignment="Center"></TextBlock>
 
         <!-- Grid Row 2 -->
-        <!--<Button Style="{StaticResource RoundCorner}" x:Name="Refresh" Grid.Column="2" Grid.Row="3" Margin="5" Width="70" HorizontalAlignment="Center" Height="20">Refresh</Button>-->
 
         <CheckBox Grid.Column="3" Grid.Row="2" Margin="5,0" VerticalContentAlignment="Center">Display Full Systems History</CheckBox>
 
