@@ -201,7 +201,7 @@
                                     <DataTemplate>
                                         <Label Style="{StaticResource MyLabelStyle}"  
                                                Content="{Binding State}" 
-                                               Margin="5,3,5,2" Padding="4,2" 
+                                               Margin="4,2" Padding="3,1,3,2"  
                                                FontWeight="DemiBold" 
                                                BorderBrush="Black" BorderThickness="1"
                                                VerticalContentAlignment="Center" VerticalAlignment="Center"></Label>

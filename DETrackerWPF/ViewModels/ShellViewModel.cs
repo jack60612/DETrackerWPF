@@ -53,6 +53,7 @@ namespace DETrackerWPF.ViewModels
             //AutoUpdater.ReportErrors = true;
             AutoUpdater.Start("https://www.darkecho.space/update/DETracker/DETracker.xml");
 
+            // Convert the .png images to something we can use in the grid
             UpTriangle = helper.Convert(DETrackerWPF.Properties.Resources.UpTriangle);
             DownTriangle = helper.Convert(DETrackerWPF.Properties.Resources.DownTriangle);
             NoChange = helper.Convert(DETrackerWPF.Properties.Resources.NoChange);
@@ -77,9 +78,7 @@ namespace DETrackerWPF.ViewModels
             // Get DE systems, size main screen to suit
             displayDESystems = dataAccess.ReadDeSystemsTable();
 
-            // sort out the size
-
-
+            // sort out the screen size
             double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
             double screenhight = System.Windows.SystemParameters.PrimaryScreenHeight;
             Helper.TransformToPixels(screenhight, screenWidth, out int ScreenHeight, out int ScreenWidth);
@@ -92,7 +91,7 @@ namespace DETrackerWPF.ViewModels
                 Height = ((displayDESystems.Count * 16) + 259);
 
             // Frig to stop scroll bars appearing when a systems updates and sorting on update time
-            Height = Height + 18;
+            Height = Height + 20;
 
             MaxHeight = Height;
 
@@ -109,11 +108,13 @@ namespace DETrackerWPF.ViewModels
                 dataAccess.CalculateAverageChange();
             else
                 dataAccess.CalculateAvfValuesPreTick();
-
+            // Adn display it
             DisplayFactionInfAvgAndChange();
-
+            
+            // Register with SQL Dependency to we get updates when one of our systems is visited
             dataAccess.RegisterForChanges();
 
+            // Timer to fire an event every 100ms to check if a system has been visited
             UpdateTimer.Tick += UpdateTimer_Tick;
             UpdateTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dataAccess.SystemUpdated = false;
@@ -121,7 +122,7 @@ namespace DETrackerWPF.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// Grab all systems that we control or have a presence in and build the Datagrid line 
         /// </summary>
         /// <param name="_deSystemsForDisplay"></param>
         /// <returns></returns>
@@ -134,7 +135,8 @@ namespace DETrackerWPF.ViewModels
             }
         }
         /// <summary>
-        /// 
+        /// Fires every 100ms to check if a DB update has been received.
+        /// Would be better to deal with this in the dependency event but proved unreliable
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -167,7 +169,7 @@ namespace DETrackerWPF.ViewModels
         }
 
         /// <summary>
-        /// Work out number of systems that moved up, down ro stayed static
+        /// Work out number of systems where our influence moved up, down or remained unchanged
         /// </summary>
         void CalculateSystemMovements()
         {
@@ -205,16 +207,13 @@ namespace DETrackerWPF.ViewModels
             FactionInfluenceChange = dataAccess.FactionInfluenceChange;
             InfChangeBackgroundColour = dataAccess.FactionInfluenceChangeValue < 0.0 ? "Red" : "DarkGreen";
         }
-
         /// <summary>
-        /// 
+        /// Open the graph screen
         /// </summary>
         public void Analytics()
         {
-            //_windowManager.ShowWindow(new GraphViewModel(displayDESystems), null, null);
             _windowManager.ShowWindow(new OxyPlotChartViewModel(displayDESystems, ""), null, null);
         }
-
         /// <summary>
         /// 
         /// </summary>
