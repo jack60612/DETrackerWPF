@@ -603,7 +603,7 @@ namespace DETrackerWPF
                         while (reader.Read())
                         {
                             var exp = MapExpansionSystems(reader);
-                            if (getDistance.Within3DManhattanDistance(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z, 20))
+                            if (getDistance.Within3DManhattanDistance(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z, 25))
                             {
                                 exp.Distance = getDistance.Distance3D(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z);
                                 _allExpansionTargets.Add(exp);

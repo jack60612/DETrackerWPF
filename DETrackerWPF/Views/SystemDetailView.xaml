@@ -294,7 +294,7 @@
                 </DataGrid>
 
                 <TextBlock Grid.Column="2" Grid.Row="1"
-                           Text="Expansion Targets (20ly Cube)"
+                           Text="Expansion Targets (25ly Cube)"
                            TextAlignment="Center" FontWeight="DemiBold" FontSize="14"
                            Margin="0,5"></TextBlock>
 
@@ -343,7 +343,13 @@
                     Background="{StaticResource BgBrush3}" Margin="0,0,1,0">
 
 
-            <TextBlock Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
+            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Yellow"
+                       TextAlignment="Center"
+                       Text="{Binding InfluenceDisplay}" Padding="0,3"/>
+
+            <Rectangle HorizontalAlignment="Stretch" Fill="Black" Height="3"/>
+
+      <TextBlock
                    FontSize="14" FontWeight="Bold"
                    Text="Orbital Stations" Margin="5,5,0,5">
             </TextBlock>
