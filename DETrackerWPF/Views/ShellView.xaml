@@ -439,7 +439,17 @@
 
     <!-- Grid Row 2 -->
 
-    <CheckBox Grid.Column="3" Grid.Row="2" Margin="5,0" VerticalContentAlignment="Center">Display Full Systems History</CheckBox>
+    <CheckBox  Grid.Column="3" Grid.Row="2" 
+               Margin="5,0" 
+               VerticalContentAlignment="Center"
+               Content="Display Full Systems History"
+               cal:Message.Attach="[Event Click] = [Action CheckChanged($this)]">
+
+
+    </CheckBox>
+
+    <!-- cal:Message.Attach="[Event SizeChanged] = [Action Grid_SizeChanged()]" -->
+
 
     <Border Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="6"
                 BorderThickness="1" BorderBrush="Black" 

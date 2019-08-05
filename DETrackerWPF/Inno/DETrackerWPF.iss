@@ -71,7 +71,7 @@ Source: "..\bin\Release\AutoUpdater.NET.dll"; DestDir: "{app}"; Flags: ignorever
 
 ;Source: "..\bin\Release\AutoUpdater.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "..\bin\Release\AutoUpdater.NET.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\Key.txt"; Flags: dontcopy noencryption deleteafterinstall 
+Source: "..\..\..\Key.txt"; Flags: dontcopy noencryption deleteafterinstall 
 
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

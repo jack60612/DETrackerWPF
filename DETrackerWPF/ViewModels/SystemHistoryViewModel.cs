@@ -137,8 +137,11 @@ namespace DETrackerWPF.ViewModels
       {
 
         TimeSpan span = DateTime.Today.Subtract(fhr.timestamp.Date);
-        if ((int) span.TotalDays > 30)
-          continue;
+        if (!ShellViewModel.DisplayFullHistory)
+        {
+          if ((int) span.TotalDays > 30)
+            continue;
+        }
 
         // Sort the Dates
         HistoryDatesList hdl = new HistoryDatesList();
