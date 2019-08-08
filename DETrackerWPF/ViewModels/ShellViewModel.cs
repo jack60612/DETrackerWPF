@@ -91,7 +91,7 @@ namespace DETrackerWPF.ViewModels
         Height = ((displayDESystems.Count * 16) + 259);
 
       // Frig to stop scroll bars appearing when a systems updates and sorting on update time
-      Height = Height + 20;
+      Height = Height + 24;
 
       MaxHeight = Height;
 
