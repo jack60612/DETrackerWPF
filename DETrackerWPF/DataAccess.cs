@@ -587,51 +587,56 @@ namespace DETrackerWPF
 
             return cpf;
         }
+
         void GetExpansionTargets(SystemOverviewModel _systemOverview, List<ClosePlayFactions> _closestPlayerFactions, List<ExpansionSystems> _expansionSystems)
         {
-            List<ExpansionSystems> _allExpansionTargets = new List<ExpansionSystems>();
+          List<ExpansionSystems> _allExpansionTargets = new List<ExpansionSystems>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+          using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+          {
+            using (SqlCommand SqlCmd = new SqlCommand("GetPopulatedSystems", sqlConnection))
             {
-                using (SqlCommand SqlCmd = new SqlCommand("GetPopulatedSystems", sqlConnection))
+              SqlCmd.CommandType = CommandType.StoredProcedure;
+
+              sqlConnection.Open();
+              using (SqlDataReader reader = SqlCmd.ExecuteReader())
+              {
+                while (reader.Read())
                 {
-                    SqlCmd.CommandType = CommandType.StoredProcedure;
-
-                    sqlConnection.Open();
-                    using (SqlDataReader reader = SqlCmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            var exp = MapExpansionSystems(reader);
-                            if (getDistance.Within3DManhattanDistance(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z, 25))
-                            {
-                                exp.Distance = getDistance.Distance3D(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z);
-                                _allExpansionTargets.Add(exp);
-                            }
-                        }
-
-                        reader.Close();
-                    }
-
-                    sqlConnection.Close();
+                  var exp = MapExpansionSystems(reader);
+                  if (getDistance.Within3DManhattanDistance(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z, 20))
+                  {
+                    exp.Distance = getDistance.Distance3D(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z);
+                    _allExpansionTargets.Add(exp);
+                  }
                 }
+
+                reader.Close();
+              }
+
+              sqlConnection.Close();
             }
+          }
 
-            foreach (var exp in _allExpansionTargets)
-            {
-                List<FactionsPresent> ffd = GetSystemsFactions(exp.EddbID);
+          foreach (var exp in _allExpansionTargets)
+          {
+            List<FactionsPresent> ffd = GetSystemsFactions(exp.EddbID);
 
-                if ((ffd.Count - 1) > 6)
-                    continue;
+            // If we are already here then skip
+            if (ffd.Exists(x => x.minor_faction_id == 11217))
+              continue;
 
-                if (ffd.Exists(x => x.minor_faction_id == 11217))
-                    continue;
+            exp.InvasionTarget = false;
 
-                // Valid expansion target
-                exp.FactionsInSystem = (ffd.Count - 1);
-                _expansionSystems.Add(exp);
-            }
+            if ((ffd.Count - 1) > 6)
+              exp.InvasionTarget = true;
+
+        // Valid expansion target
+        exp.FactionsInSystem = (ffd.Count - 1);
+            _expansionSystems.Add(exp);
+          }
         }
+
         /// <summary>
         /// 
         /// </summary>

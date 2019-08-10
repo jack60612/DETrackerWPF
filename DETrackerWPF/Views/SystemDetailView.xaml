@@ -13,267 +13,273 @@
              Title="System Overview Screen"
              SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
 
-    <Window.Resources>
+  <Window.Resources>
 
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-        <Style x:Key="SelectedRowPMF" TargetType="{x:Type DataGridRow}">
-            <Setter Property="cal:Message.Attach" Value="[MouseDoubleClick] = [Action RowSelectClosePMF($dataContext)]"/>
-        </Style>
+    <Style x:Key="SelectedRowPMF" TargetType="{x:Type DataGridRow}">
+      <Setter Property="cal:Message.Attach" Value="[MouseDoubleClick] = [Action RowSelectClosePMF($dataContext)]"/>
+    </Style>
 
-        <Style x:Key="SelectedRowExpansion" TargetType="{x:Type DataGridRow}">
-            <Setter Property="cal:Message.Attach" Value="[MouseDoubleClick] = [Action RowSelectExpansion($dataContext)]"/>
-        </Style>
+    <Style x:Key="SelectedRowExpansion" TargetType="{x:Type DataGridRow}">
+      <Setter Property="cal:Message.Attach" Value="[MouseDoubleClick] = [Action RowSelectExpansion($dataContext)]"/>
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding InvasionTarget}" Value="True">
+          <Setter Property="Foreground" Value="Red" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
 
-        <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Offset="0" Color="Yellow"/>
-            <GradientStop Offset="1" Color="BurlyWood"/>
-        </LinearGradientBrush>
+    <LinearGradientBrush x:Key="BgBrush1" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Offset="0" Color="Yellow"/>
+      <GradientStop Offset="1" Color="BurlyWood"/>
+    </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="BgBrush2" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Offset="0" Color="DodgerBlue"/>
-            <GradientStop Offset="1" Color="LightBlue"/>
-        </LinearGradientBrush>
+    <LinearGradientBrush x:Key="BgBrush2" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Offset="0" Color="DodgerBlue"/>
+      <GradientStop Offset="1" Color="LightBlue"/>
+    </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="BgBrush3" StartPoint="0,0" EndPoint="0,1" Opacity="0.8">
-            <GradientStop Offset="1" Color="LightSteelBlue"/>
-            <GradientStop Offset="0" Color="CadetBlue"/>
-        </LinearGradientBrush>
+    <LinearGradientBrush x:Key="BgBrush3" StartPoint="0,0" EndPoint="0,1" Opacity="0.8">
+      <GradientStop Offset="1" Color="LightSteelBlue"/>
+      <GradientStop Offset="0" Color="CadetBlue"/>
+    </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="BgBrush4" StartPoint="0,0" EndPoint="0,1" Opacity="0.8">
-            <GradientStop Offset="0" Color="SkyBlue"/>
-            <GradientStop Offset="1" Color="AliceBlue"/>
-        </LinearGradientBrush>
+    <LinearGradientBrush x:Key="BgBrush4" StartPoint="0,0" EndPoint="0,1" Opacity="0.8">
+      <GradientStop Offset="0" Color="SkyBlue"/>
+      <GradientStop Offset="1" Color="AliceBlue"/>
+    </LinearGradientBrush>
 
-        <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0,0" EndPoint="0,1" Opacity="0.4">
-            <GradientStop Offset="0" Color="DimGray"/>
-            <GradientStop Offset="1" Color="LightSlateGray"/>
-        </LinearGradientBrush>
+    <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0,0" EndPoint="0,1" Opacity="0.4">
+      <GradientStop Offset="0" Color="DimGray"/>
+      <GradientStop Offset="1" Color="LightSlateGray"/>
+    </LinearGradientBrush>
 
-        <Style TargetType="{x:Type DataGrid}" x:Key="AlternatingRow">
-            <Setter Property="RowBackground" Value="Cornsilk"/>
-            <Setter Property="AlternatingRowBackground" Value="#e8e8e8"/>
-        </Style>
+    <Style TargetType="{x:Type DataGrid}" x:Key="AlternatingRow">
+      <Setter Property="RowBackground" Value="Cornsilk"/>
+      <Setter Property="AlternatingRowBackground" Value="#e8e8e8"/>
+    </Style>
 
-        <Style x:Key="WrapAlignLeftBottom" TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding}" Padding="0,0,8,2" Background="Transparent" Margin="2,0"></TextBlock>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-            <Setter Property="FontWeight" Value="DemiBold"></Setter>
-            <Setter Property="Background" Value="{StaticResource HeaderBrush}"></Setter>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-        </Style>
+    <Style x:Key="WrapAlignLeftBottom" TargetType="{x:Type DataGridColumnHeader}">
+      <Setter Property="ContentTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <TextBlock TextWrapping="Wrap" Text="{Binding}" Padding="0,0,8,2" Background="Transparent" Margin="2,0"></TextBlock>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+      <Setter Property="VerticalContentAlignment" Value="Bottom"></Setter>
+      <Setter Property="FontSize" Value="14"></Setter>
+      <Setter Property="FontWeight" Value="DemiBold"></Setter>
+      <Setter Property="Background" Value="{StaticResource HeaderBrush}"></Setter>
+      <Setter Property="BorderBrush" Value="Black"/>
+      <Setter Property="BorderThickness" Value="0,0,1,0"/>
+    </Style>
 
-        <Style x:Key="DataGridCellCentered" TargetType="DataGridCell">
-            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-        </Style>
+    <Style x:Key="DataGridCellCentered" TargetType="DataGridCell">
+      <Setter Property="TextBlock.TextAlignment" Value="Center" />
+    </Style>
 
 
-    </Window.Resources>
 
-    <Grid>
+  </Window.Resources>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="Auto" />
-            <ColumnDefinition Width ="*" />
-            <ColumnDefinition Width="5"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
-        </Grid.RowDefinitions>
+  <Grid>
 
-        <!-- Header -->
-        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="9" 
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="5" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="Auto" />
+      <ColumnDefinition Width ="*" />
+      <ColumnDefinition Width="5"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="5" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="5" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="9" 
                     Orientation="Vertical"
                     Background="{StaticResource BgBrush4}" Margin="0,0,0,3">
 
-            <Grid x:Name="SystemOverview"
+      <Grid x:Name="SystemOverview"
                   Margin="5">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width ="Auto" />
-                    <ColumnDefinition Width ="Auto" />
-                    <ColumnDefinition Width ="*" />
-                    <ColumnDefinition Width ="Auto" />
-                    <ColumnDefinition Width ="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width ="Auto" />
+          <ColumnDefinition Width ="Auto" />
+          <ColumnDefinition Width ="*" />
+          <ColumnDefinition Width ="Auto" />
+          <ColumnDefinition Width ="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
 
-                <!-- Allegiance Col 0 Row 2 -->
-                <TextBlock Grid.Column="0" Grid.Row="1"
+        <!-- Allegiance Col 0 Row 2 -->
+        <TextBlock Grid.Column="0" Grid.Row="1"
                            FontWeight="DemiBold" FontSize="14" 
                            Text="Allegiance:"
                            MinWidth="100" MinHeight="20"
                            TextAlignment="Right"
                            Margin="0,0,5,0">
 
-                </TextBlock>
-                <TextBlock x:Name="SystemOverview_Allegiance"
+        </TextBlock>
+        <TextBlock x:Name="SystemOverview_Allegiance"
                            Grid.Column="1" Grid.Row="1"
                            FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
-                </TextBlock>
+        </TextBlock>
 
-                <!-- Government Col 0 Row 3 -->
-                <TextBlock Grid.Column="0" Grid.Row="2"
+        <!-- Government Col 0 Row 3 -->
+        <TextBlock Grid.Column="0" Grid.Row="2"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Government:"
                            MinWidth="100" MinHeight="20"
                            TextAlignment="Right"
                            Margin="0,0,5,0">
 
-                </TextBlock>
-                <TextBlock x:Name="SystemOverview_Government"
+        </TextBlock>
+        <TextBlock x:Name="SystemOverview_Government"
                            Grid.Column="1" Grid.Row="2"
                            FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
-                </TextBlock>
+        </TextBlock>
 
-                <!-- Population Col 0 Row 4 -->
-                <TextBlock Grid.Column="0" Grid.Row="3"
+        <!-- Population Col 0 Row 4 -->
+        <TextBlock Grid.Column="0" Grid.Row="3"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Population:"
                            MinWidth="100" MinHeight="20"
                            TextAlignment="Right"
                            Margin="0,0,5,0">
 
-                </TextBlock>
-                <TextBlock x:Name="SystemOverview_Population"
+        </TextBlock>
+        <TextBlock x:Name="SystemOverview_Population"
                            Grid.Column="1" Grid.Row="3"
                            FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20"
                            Text="{Binding SystemOverview.Population, StringFormat={}{0:###,###,###}}">
-                </TextBlock>
+        </TextBlock>
 
 
-                <!-- Grid Col 2 Systems Name-->
-                <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="3"
+        <!-- Grid Col 2 Systems Name-->
+        <Border Grid.Column="2" Grid.Row="1" Grid.RowSpan="3"
                         HorizontalAlignment="Center" VerticalAlignment="Center"
                         BorderBrush="Black" BorderThickness="1" CornerRadius="20"
                         Background="{StaticResource BgBrush3}">
-                <TextBlock FontSize="24" FontWeight="DemiBold"
+          <TextBlock FontSize="24" FontWeight="DemiBold"
                            Foreground="MediumBlue"
                            Padding="30,0,30,5"
                            Text="{Binding Path=SystemOverview.SystemName}" UseLayoutRounding="True">
-                </TextBlock>
-                    <Border.Effect>
-                        <DropShadowEffect
+          </TextBlock>
+          <Border.Effect>
+            <DropShadowEffect
                             ShadowDepth="4"
                             Direction="330"
                             Color="Black"
                             Opacity="0.5"
                             BlurRadius="4"/>
-                    </Border.Effect>
-                </Border>
+          </Border.Effect>
+        </Border>
 
 
-                <!-- Controlling Faction Col 1 Row 4 -->
-                <TextBlock Grid.Column="3" Grid.Row="1"
+        <!-- Controlling Faction Col 1 Row 4 -->
+        <TextBlock Grid.Column="3" Grid.Row="1"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Controlling Faction:"
                            MinWidth="100" MinHeight="20"
                            TextAlignment="Right"
                            Margin="0,0,5,0">
 
-                </TextBlock>
-                <TextBlock x:Name="SystemOverview_ControllingFaction"
+        </TextBlock>
+        <TextBlock x:Name="SystemOverview_ControllingFaction"
                            Grid.Column="4" Grid.Row="1"
                            FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
-                </TextBlock>
+        </TextBlock>
 
-                <!-- Security Level Col 1 Row 4 -->
-                <TextBlock Grid.Column="3" Grid.Row="2"
+        <!-- Security Level Col 1 Row 4 -->
+        <TextBlock Grid.Column="3" Grid.Row="2"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Security Level:"
                            MinWidth="100" MinHeight="20"
                            TextAlignment="Right"
                            Margin="0,0,5,0">
 
-                </TextBlock>
-                <TextBlock x:Name="SystemOverview_SecurityLevel"
+        </TextBlock>
+        <TextBlock x:Name="SystemOverview_SecurityLevel"
                            Grid.Column="4" Grid.Row="2"
                            FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
-                </TextBlock>
+        </TextBlock>
 
-                <!-- Security Level Col 1 Row 4 -->
-                <TextBlock Grid.Column="3" Grid.Row="3"
+        <!-- Security Level Col 1 Row 4 -->
+        <TextBlock Grid.Column="3" Grid.Row="3"
                            FontWeight="DemiBold" FontSize="14"
                            Text="Economy:"
                            MinWidth="100" MinHeight="20"
                            TextAlignment="Right"
                            Margin="0,0,5,0">
 
-                </TextBlock>
-                <TextBlock x:Name="SystemEconomy"
+        </TextBlock>
+        <TextBlock x:Name="SystemEconomy"
                            Grid.Column="4" Grid.Row="3"
                            FontWeight="DemiBold" FontSize="14" Foreground="MediumBlue"
                            MinHeight="20">
-                </TextBlock>
+        </TextBlock>
 
-            </Grid>
+      </Grid>
 
-        </StackPanel>
+    </StackPanel>
 
-        <!-- PMF and Expansion system panel -->
-        <StackPanel Grid.Column="9" Grid.Row="2" Grid.RowSpan="5"
+    <!-- PMF and Expansion system panel -->
+    <StackPanel Grid.Column="9" Grid.Row="2" Grid.RowSpan="5"
                     Background="{StaticResource BgBrush1}"
                     MinWidth="200"
                     Visibility="{Binding Path=ShowPMFData, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="1,0,0,0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width ="*" />
-                    <ColumnDefinition Width ="*" />
-                    <ColumnDefinition Width="10" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                </Grid.RowDefinitions>
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="10" />
+          <ColumnDefinition Width ="*" />
+          <ColumnDefinition Width ="*" />
+          <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="10" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="1" Grid.Row="1"
+        <TextBlock Grid.Column="1" Grid.Row="1"
                            Text="Player Factions within 30ly" 
                            TextAlignment="Center" FontWeight="DemiBold" FontSize="14"
                            Margin="0,5"></TextBlock>
 
-                <DataGrid x:Name="ClosePMFs"
+        <DataGrid x:Name="ClosePMFs"
                           Grid.Column="1" Grid.Row="2"
                           ColumnHeaderStyle="{StaticResource WrapAlignLeftBottom}"
                           Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Center"
@@ -285,20 +291,20 @@
                           RowStyle="{StaticResource SelectedRowPMF}"
                           Style="{StaticResource AlternatingRow}" Margin="5,0">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Faction" Binding="{Binding Path=ControllingFaction}"/>
-                        <DataGridTextColumn Header="System" Binding="{Binding Path=SystemName}"/>
-                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ly'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                    </DataGrid.Columns>
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Faction" Binding="{Binding Path=ControllingFaction}"/>
+            <DataGridTextColumn Header="System" Binding="{Binding Path=SystemName}"/>
+            <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ly'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
+          </DataGrid.Columns>
 
-                </DataGrid>
+        </DataGrid>
 
-                <TextBlock Grid.Column="2" Grid.Row="1"
-                           Text="Expansion Targets (25ly Cube)"
+        <TextBlock Grid.Column="2" Grid.Row="1"
+                           Text="Expansion Targets (20ly Cube)"
                            TextAlignment="Center" FontWeight="DemiBold" FontSize="14"
                            Margin="0,5"></TextBlock>
 
-                <DataGrid x:Name="ExpansionTargetSystems"
+        <DataGrid x:Name="ExpansionTargetSystems"
                           Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"
                           ColumnHeaderStyle="{StaticResource WrapAlignLeftBottom}"
                           Width="Auto" VerticalAlignment="Top"  HorizontalAlignment="Center"
@@ -310,52 +316,52 @@
                           RowStyle="{StaticResource SelectedRowExpansion}"
                           Style="{StaticResource AlternatingRow}" Margin="5,0">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="System" Binding="{Binding Path=SystemName}"/>
-                        <DataGridTextColumn Header="Factions" Binding="{Binding Path=FactionsInSystem}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ly'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="System" Binding="{Binding Path=SystemName}"/>
+            <DataGridTextColumn Header="Factions" Binding="{Binding Path=FactionsInSystem}" CellStyle="{StaticResource DataGridCellCentered}"/>
+            <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance, StringFormat={}{0:###,###,###' ly'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
+          </DataGrid.Columns>
+        </DataGrid>
 
-                <!-- Wait spinner and Text -->
-                <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
+        <!-- Wait spinner and Text -->
+        <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
                             Orientation="Vertical">
 
-                    <Controls:ProgressRing Width="25" Height="24"
+          <Controls:ProgressRing Width="25" Height="24"
                                        Margin="10"
                                        IsActive="{Binding Path=ProgressRingActive, Mode=TwoWay}" 
                                        Visibility="{Binding VisibilityState, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
-                    </Controls:ProgressRing>
+          </Controls:ProgressRing>
 
-                    <TextBlock x:Name="PMFStatus" 
+          <TextBlock x:Name="PMFStatus" 
                                FontWeight="DemiBold" FontSize="14" TextAlignment="Center"
                                MinHeight="20"
                                Visibility="{Binding Path=VisibilityState, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}">
 
-                    </TextBlock>
-                </StackPanel>
-            </Grid>
+          </TextBlock>
         </StackPanel>
+      </Grid>
+    </StackPanel>
 
-        <!-- Orbital and planetary stations panel-->
-        <StackPanel Orientation="Vertical"
+    <!-- Orbital and planetary stations panel-->
+    <StackPanel Orientation="Vertical"
                     Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="5"
                     Background="{StaticResource BgBrush3}" Margin="0,0,1,0">
 
 
-            <TextBlock FontSize="14" FontWeight="Bold" Foreground="Yellow"
+      <TextBlock FontSize="14" FontWeight="Bold" Foreground="Yellow"
                        TextAlignment="Center"
                        Text="{Binding InfluenceDisplay}" Padding="0,3"/>
 
-            <Rectangle HorizontalAlignment="Stretch" Fill="Black" Height="3"/>
+      <Rectangle HorizontalAlignment="Stretch" Fill="Black" Height="3"/>
 
       <TextBlock
                    FontSize="14" FontWeight="Bold"
                    Text="Orbital Stations" Margin="5,5,0,5">
-            </TextBlock>
+      </TextBlock>
 
-            <StackPanel>
-                <DataGrid x:Name="OrbitalStations"
+      <StackPanel>
+        <DataGrid x:Name="OrbitalStations"
                       ColumnHeaderStyle="{StaticResource WrapAlignLeftBottom}"
                       Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center"
                       FontSize="14" FontWeight="DemiBold"
@@ -365,24 +371,24 @@
                       GridLinesVisibility="Vertical"
                       Style="{StaticResource AlternatingRow}" Margin="5,0,5,5">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Station" Binding="{Binding Path=StationName}"/>
-                        <DataGridTextColumn Header="Controlled By" Binding="{Binding Path=ControllingFaction}"/>
-                        <DataGridTextColumn Header="Station Type" Binding="{Binding Path=StationType}"/>
-                        <DataGridTextColumn Header="Max Pad" Binding="{Binding Path=MaxLandingPad}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStar, StringFormat={}{0:###,###,###' ls'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                    </DataGrid.Columns>
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Station" Binding="{Binding Path=StationName}"/>
+            <DataGridTextColumn Header="Controlled By" Binding="{Binding Path=ControllingFaction}"/>
+            <DataGridTextColumn Header="Station Type" Binding="{Binding Path=StationType}"/>
+            <DataGridTextColumn Header="Max Pad" Binding="{Binding Path=MaxLandingPad}" CellStyle="{StaticResource DataGridCellCentered}"/>
+            <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStar, StringFormat={}{0:###,###,###' ls'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
+          </DataGrid.Columns>
 
-                </DataGrid>
-            </StackPanel>
+        </DataGrid>
+      </StackPanel>
 
-            <TextBlock FontSize="14" FontWeight="Bold"
+      <TextBlock FontSize="14" FontWeight="Bold"
                    Text="Planetary Stations"  Margin="5,5,0,5"
                    Visibility="{Binding Path=ArePlanetary, Converter={StaticResource BooleanToVisibilityConverter}}">
-            </TextBlock>
+      </TextBlock>
 
-            <StackPanel>
-                <DataGrid x:Name="PlanetaryStations" 
+      <StackPanel>
+        <DataGrid x:Name="PlanetaryStations" 
                       ColumnHeaderStyle="{StaticResource WrapAlignLeftBottom}"
                       Width="Auto" VerticalAlignment="Center" HorizontalAlignment="Center"
                       FontSize="14" FontWeight="DemiBold"
@@ -393,26 +399,26 @@
                       Style="{StaticResource AlternatingRow}"
                       Visibility="{Binding Path=ArePlanetary, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="5,0,5,5">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Station" Binding="{Binding Path=StationName}"/>
-                        <DataGridTextColumn Header="Controlled By" Binding="{Binding Path=ControllingFaction}"/>
-                        <DataGridTextColumn Header="Station Type" Binding="{Binding Path=StationType}"/>
-                        <DataGridTextColumn Header="Max Pad" Binding="{Binding Path=MaxLandingPad}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                        <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStar, StringFormat={}{0:###,###,###' ls'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
-                    </DataGrid.Columns>
+          <DataGrid.Columns>
+            <DataGridTextColumn Header="Station" Binding="{Binding Path=StationName}"/>
+            <DataGridTextColumn Header="Controlled By" Binding="{Binding Path=ControllingFaction}"/>
+            <DataGridTextColumn Header="Station Type" Binding="{Binding Path=StationType}"/>
+            <DataGridTextColumn Header="Max Pad" Binding="{Binding Path=MaxLandingPad}" CellStyle="{StaticResource DataGridCellCentered}"/>
+            <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStar, StringFormat={}{0:###,###,###' ls'}}" CellStyle="{StaticResource DataGridCellCentered}"/>
+          </DataGrid.Columns>
 
-                </DataGrid>
-            </StackPanel>
+        </DataGrid>
+      </StackPanel>
 
-        </StackPanel>
+    </StackPanel>
 
-        <!-- System faction performance graph-->
-        <oxy:PlotView Model="{Binding PlotModel}"
+    <!-- System faction performance graph-->
+    <oxy:PlotView Model="{Binding PlotModel}"
                 Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="9"
                 MinWidth="400" MinHeight="300"
                   Background="{StaticResource BgBrush3}" Margin="0,3,0,0">
-        </oxy:PlotView>
+    </oxy:PlotView>
 
-    </Grid>
+  </Grid>
 
 </Window>

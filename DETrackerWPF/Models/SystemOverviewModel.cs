@@ -51,5 +51,6 @@ namespace DETrackerWPF.Models
         public double z { get; set; }
         public double Distance { get; set; }
         public int EddbID { get; set; }
+        public bool InvasionTarget { get; set; }
     }
 }
