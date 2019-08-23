@@ -101,7 +101,7 @@ namespace DETrackerWPF.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ECHO is on.
+        ///   Looks up a localized string similar to 20/08/2019 12:54:45.53 
         ///.
         /// </summary>
         internal static string BuildDate {
@@ -266,6 +266,16 @@ namespace DETrackerWPF.Properties {
         internal static System.Drawing.Bitmap UpTriangle {
             get {
                 object obj = ResourceManager.GetObject("UpTriangle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WebImage {
+            get {
+                object obj = ResourceManager.GetObject("WebImage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

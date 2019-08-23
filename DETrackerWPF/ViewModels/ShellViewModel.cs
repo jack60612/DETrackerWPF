@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Primitives;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ using AutoUpdaterDotNET;
 using Caliburn.Micro;
 using DETrackerWPF.Models;
 using MahApps.Metro.Controls;
+using Newtonsoft.Json;
 
 
 namespace DETrackerWPF.ViewModels
@@ -59,6 +62,7 @@ namespace DETrackerWPF.ViewModels
       NoChange = helper.Convert(DETrackerWPF.Properties.Resources.NoChange);
       SysInfo = helper.Convert(DETrackerWPF.Properties.Resources.InfoBlue);
       SysHistory = helper.Convert(DETrackerWPF.Properties.Resources.analytics);
+      WebImage = helper.Convert(DETrackerWPF.Properties.Resources.WebImage);
 
       //Get and Load the connect strings
       dataAccess.DecryptCheck();
@@ -246,6 +250,33 @@ namespace DETrackerWPF.ViewModels
     {
       WindowManager windowManager = new WindowManager();
       windowManager.ShowWindow(new SystemHistoryViewModel(GetSystemAddress(sender), displayDESystems), null, null);
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    public void EDDBClick(object sender)
+    {
+      System.Diagnostics.Process.Start($"https://eddb.io/system/{dataAccess.GetSystemEDDBID(GetSystemName(sender))}");
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    public void EliteBGSClick(object sender)
+    {
+      WebRequest webRequest = WebRequest.Create(string.Format("https://elitebgs.app/api/ebgs/v4/systems?name={0}", GetSystemName(sender).Replace("+", "%2B")));
+      WebResponse webResp = webRequest.GetResponse();
+
+      Stream dataStream = webResp.GetResponseStream();
+
+      StreamReader reader = new StreamReader(dataStream);
+      string responseFromServer = reader.ReadToEnd();
+      reader.Close();
+      var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseFromServer);
+      var retDocs = JsonConvert.DeserializeObject<dynamic>(dict["docs"].ToString());
+      string sysAddr = retDocs[0]._id.ToString();
+      System.Diagnostics.Process.Start(string.Format("https://elitebgs.app/system/{0}", sysAddr));
     }
     /// <summary>
     /// 
@@ -491,6 +522,7 @@ namespace DETrackerWPF.ViewModels
     public System.Windows.Media.Imaging.BitmapImage NoChange { get; set; }
     public System.Windows.Media.Imaging.BitmapImage SysInfo { get; set; }
     public System.Windows.Media.Imaging.BitmapImage SysHistory { get; set; }
+    public System.Windows.Media.Imaging.BitmapImage WebImage { get; set; }
     public string WindowTitle { get; set; }
     public static bool DisplayFullHistory { get; set; }
   }

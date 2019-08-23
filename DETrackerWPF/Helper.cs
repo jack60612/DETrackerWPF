@@ -35,12 +35,10 @@ namespace DETrackerWPF
 
         public static double MaxInfluence(double CurrentInfluence, Int64 Population)
         {
-
-          var p1 = (CurrentInfluence + (36 - Math.Log(Population, 2)));
-          var p2 = (100 + (36 - Math.Log(Population, 2)));
+          var p1 = (CurrentInfluence + (42.8 - Math.Log(Population, 2)));
+          var p2 = (100 + (42.8 - Math.Log(Population, 2)));
 
           return (p1 / p2) * 100;
-
         }
 
         /// <summary>

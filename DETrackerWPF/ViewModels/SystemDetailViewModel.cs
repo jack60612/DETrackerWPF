@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -31,6 +32,17 @@ namespace DETrackerWPF.ViewModels
 
     DataAccess dataAccess = new DataAccess();
 
+    string[] hexColours = new string[] { "#002A64",
+      "#7BC141",
+      "#767731",
+      "#97b8fd",
+      "#40e0d0",
+      "#d31145",
+      "#9a504c",
+      "#2e2c2e" };
+
+    List<PlotColour> PlotColours = new List<PlotColour>();
+
     public SystemDetailViewModel(List<DESystemsForDisplay> deSystemsForDisplay, string sysName)
     {
 
@@ -46,6 +58,12 @@ namespace DETrackerWPF.ViewModels
       PlotModel.LegendBackground = OxyColor.FromAColor(200, OxyColors.White);
       PlotModel.LegendBorder = OxyColors.Black;
 
+
+      FactionPlot = new PlotModel();
+      FactionPlot.Title = "System Influence";
+      FactionPlot.LegendBackground = OxyColor.FromAColor(200, OxyColors.White);
+      FactionPlot.LegendBorder = OxyColors.Black;
+      FactionPlot.PlotMargins = new OxyThickness(25,25,35,25);
 
       var SelectSystem = deSystemsForDisplay[deSystemsForDisplay.FindIndex(x => x.StarSystem == sysName)];
       var CurrentFactionHistory = SelectSystem.FactionHistory.Last();
@@ -65,6 +83,7 @@ namespace DETrackerWPF.ViewModels
       PlanetaryStations = new ObservableCollection<StationList>(SystemOverview.StationsInSystem.Where(x => x.IsPlantery).ToList());
 
       DisplayDarkEchoSystem();
+      FactionPieChart();
 
       // Fire off the retrieval of close PMFs and Expansion targets as background task 
       PMFStatus = "Loading Closest PMFs and Expansion Systems";
@@ -84,6 +103,42 @@ namespace DETrackerWPF.ViewModels
       ExpansionTargetSystems = new ObservableCollection<ExpansionSystems>(_expansionSystems.OrderBy(x => x.Distance));
       ShowPMFData = true;
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    public void FactionPieChart()
+    {
+
+
+      var todaysRec = _displayDESystems[_displayDESystems.FindIndex(x => x.StarSystem == SystemOverview.SystemName)].FactionHistory.Last();
+      todaysRec.Factions.RemoveAll(x => x.Name.Contains("Federation Local Branch"));
+
+      var ps = new PieSeries
+      {
+        StrokeThickness = 0.25,
+        AngleSpan = 360,
+        StartAngle = 0,
+        InsideLabelFormat = "",
+        OutsideLabelFormat = "{0:##.##}%",
+        TickHorizontalLength = 8,
+        TickRadialLength = 4,
+        FontWeight = FontWeights.Bold
+      };
+
+      var index = 0;
+
+      foreach (var faction in todaysRec.Factions)
+      {
+        var hex = PlotColours[PlotColours.FindIndex(x => x.FactionName == faction.Name)].HexColour;
+        if (faction.Name == "Dark Echo")
+          ps.Slices.Add(new PieSlice(faction.Name, faction.Influence * 100) {IsExploded = true, Fill = OxyColor.Parse(hex)} );
+        else
+          ps.Slices.Add(new PieSlice(faction.Name, faction.Influence * 100){ Fill = OxyColor.Parse(hex) });
+
+        index++;
+      }
+      FactionPlot.Series.Add(ps);
+    }
 
     /// <summary>
     /// Load system performance graph
@@ -96,6 +151,7 @@ namespace DETrackerWPF.ViewModels
 
       PlotModel.Series.Clear();
       PlotModel.Axes.Clear();
+      PlotColours.Clear();
 
       foreach (var histRec in _displayDESystems[_displayDESystems.FindIndex(x => x.StarSystem == SystemOverview.SystemName)].FactionHistory)
       {
@@ -125,10 +181,13 @@ namespace DETrackerWPF.ViewModels
       }
 
       var MaxHistoryDays = 0;
+      var index = 0;
 
       foreach (var sf in tmpFactionData)
       {
-        LineSeries ls = new LineSeries();
+        LineSeries ls = new LineSeries() {Color = OxyColor.Parse(hexColours[index])};
+        PlotColours.Add(new PlotColour() {FactionName = sf.FactionName, HexColour = hexColours[index]});
+
         ls.Title = sf.FactionName;
 
         if (MaxHistoryDays < sf.DateNAndInf.Count)
@@ -136,10 +195,11 @@ namespace DETrackerWPF.ViewModels
 
         foreach (var dai in sf.DateNAndInf)
         {
-          ls.Points.Add(new DataPoint(DateTimeAxis.ToDouble(dai.FactionInfDate), dai.FactionInf));
+          ls.Points.Add(new DataPoint(DateTimeAxis.ToDouble(dai.FactionInfDate), dai.FactionInf) );
         }
 
         PlotModel.Series.Add(ls);
+        index++;
       }
 
       AddAxis();
@@ -296,6 +356,13 @@ namespace DETrackerWPF.ViewModels
     public List<ClosePlayFactions> _closePlayerFactions { get; set; }
     public List<ExpansionSystems> _expansionSystems { get; set; }
     public PlotModel PlotModel { get; private set; }
+    public  PlotModel FactionPlot { get; set; }
     public string InfluenceDisplay { get; set; }
+
+    public class PlotColour
+    {
+      public string FactionName { get; set; }
+      public string HexColour { get; set; }
+    }
   }
 }

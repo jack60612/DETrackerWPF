@@ -27,13 +27,11 @@ namespace DETrackerWPF.ViewModels
     // List of all Dark Echo systems including history
     //List<VisitHistory> _deVisitHistory = new List<VisitHistory>();
 
-
     Helper helper = new Helper();
     DataAccess dataAccess = new DataAccess();
 
     public OxyPlotChartViewModel(List<DESystemsForDisplay> displayDESystems, string SystemToDisplay)
     {
-
       RightArrow = helper.Convert(DETrackerWPF.Properties.Resources.rightArrow);
       LeftArrow = helper.Convert(DETrackerWPF.Properties.Resources.leftArrow);
 
@@ -46,7 +44,6 @@ namespace DETrackerWPF.ViewModels
       if (SystemToDisplay.Length > 0)
         SelectedSystemIndex = DarkEchoSystems.IndexOf(SystemToDisplay);
 
-
       PlotModel = new PlotModel { Title = "Faction Performance" };
       PlotModel.LegendPlacement = LegendPlacement.Outside;
       PlotModel.LegendPosition = LegendPosition.RightTop;
@@ -56,8 +53,6 @@ namespace DETrackerWPF.ViewModels
       PlotModel.TitleFontSize = 24;
       PlotModel.TitlePadding = 20;
       PlotModel.TitleColor = OxyColors.MidnightBlue;
-
-
     }
     /// <summary>
     /// 

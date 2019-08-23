@@ -291,6 +291,31 @@ namespace DETrackerWPF
             return cd;
         }
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SystemName"></param>
+        /// <returns></returns>
+        public int GetSystemEDDBID(string SystemName)
+        {
+          int EDDBid = 0;
+          string SqlCmdStr = string.Format("SELECT id FROM populated_systems WHERE populated_systems.system_name = '{0}'", SystemName);
+
+          using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+          {
+            using (SqlCommand sqlCmd = new SqlCommand(SqlCmdStr, sqlConnection))
+            {
+              sqlConnection.Open();
+
+              object result = sqlCmd.ExecuteScalar();
+              if (result != null)
+                EDDBid = Convert.ToInt32(result);
+
+              sqlConnection.Close();
+            }
+          }
+          return EDDBid;
+        }
+        /// <summary>
         /// Read in Dark Echo Systems
         /// </summary>
         /// <returns></returns>
@@ -1042,6 +1067,7 @@ namespace DETrackerWPF
 
             // Get end decrypt the connection strings
             RemoteConnectionString = CryptorEngine.Decrypt(connections[1].ConnectionString, true);
+            //RemoteConnectionString = RemoteConnectionString.Replace("=true", "=false");
             LocalConnectionString = CryptorEngine.Decrypt(connections[2].ConnectionString, true);
 
             connectionString = RemoteConnectionString;

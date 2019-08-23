@@ -340,6 +340,20 @@
               <Image Source="{Binding Path=SysHistory}"></Image>
             </MenuItem.Icon>
           </MenuItem>
+          <MenuItem x:Name="EDDBClick"
+                    cal:Message.Attach="EDDBClick($view)"
+                    Header="Show on EDDB">
+            <MenuItem.Icon>
+              <Image Source="{Binding Path=WebImage}"></Image>
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem x:Name="EliteBGSClick"
+                    cal:Message.Attach="EliteBGSClick($view)"
+                    Header="Show on EliteBGS">
+            <MenuItem.Icon>
+              <Image Source="{Binding Path=WebImage}"></Image>
+            </MenuItem.Icon>
+          </MenuItem>
         </ContextMenu>
       </DataGrid.ContextMenu>
 
