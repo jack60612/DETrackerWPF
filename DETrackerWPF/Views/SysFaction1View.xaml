@@ -57,94 +57,104 @@
             </Setter>
         </Style>
 
-        <Style  x:Key="MyLabelStyle" TargetType="Label">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Label}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+    <Style  x:Key="MyLabelStyle" TargetType="Label">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="{x:Type Label}">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 Background="{TemplateBinding Background}" 
                                 Padding="{TemplateBinding Padding}" 
                                 SnapsToDevicePixels="true" 
                                 CornerRadius="9">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+              <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                               RecognizesAccessKey="True" 
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding State}" Value="Expansion">
-                    <Setter Property="Background" Value="DodgerBlue"></Setter>
-                    <Setter Property="Border.Background" Value="DodgerBlue"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Election">
-                    <Setter Property="Background" Value="DodgerBlue"></Setter>
-                    <Setter Property="Border.Background" Value="DodgerBlue"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Boom">
-                    <Setter Property="Background" Value="ForestGreen"></Setter>
-                    <Setter Property="Border.Background" Value="ForestGreen"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="War">
-                    <Setter Property="Background" Value="Red"></Setter>
-                    <Setter Property="Border.Background" Value="Red"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Civil War">
-                    <Setter Property="Background" Value="Red"></Setter>
-                    <Setter Property="Border.Background" Value="Red"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Civil Unrest">
-                    <Setter Property="Background" Value="Red"></Setter>
-                    <Setter Property="Border.Background" Value="Red"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Civil Liberty">
-                    <Setter Property="Border.Background" Value="Yellow"></Setter>
-                    <Setter Property="TextBlock.Background" Value="Yellow"></Setter>
-                    <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Pirate Attack">
-                    <Setter Property="Background" Value="Red"></Setter>
-                    <Setter Property="Border.Background" Value="Red"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Civil Unrest">
-                    <Setter Property="Background" Value="Red"></Setter>
-                    <Setter Property="Border.Background" Value="Red"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Bust">
-                    <Setter Property="Background" Value="Plum"></Setter>
-                    <Setter Property="Border.Background" Value="Plum"></Setter>
-                    <Setter Property="Foreground" Value="Black"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Retreat">
-                    <Setter Property="Background" Value="DeepPink"></Setter>
-                    <Setter Property="Border.Background" Value="DeepPink"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding State}" Value="Outbreak">
-                    <Setter Property="Background" Value="DarkOrange"></Setter>
-                    <Setter Property="Border.Background" Value="DarkOrange"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding State}" Value="Expansion">
+          <Setter Property="Background" Value="DodgerBlue"></Setter>
+          <Setter Property="Border.Background" Value="DodgerBlue"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Election">
+          <Setter Property="Background" Value="DodgerBlue"></Setter>
+          <Setter Property="Border.Background" Value="DodgerBlue"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Boom">
+          <Setter Property="Background" Value="ForestGreen"></Setter>
+          <Setter Property="Border.Background" Value="ForestGreen"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="War">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Civil War">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Civil Unrest">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Civil Liberty">
+          <Setter Property="Border.Background" Value="Yellow"></Setter>
+          <Setter Property="TextBlock.Background" Value="Yellow"></Setter>
+          <Setter Property="TextBlock.Foreground" Value="Black"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Pirate Attack">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Civil Unrest">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Bust">
+          <Setter Property="Background" Value="Plum"></Setter>
+          <Setter Property="Border.Background" Value="Plum"></Setter>
+          <Setter Property="Foreground" Value="Black"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Retreat">
+          <Setter Property="Background" Value="DeepPink"></Setter>
+          <Setter Property="Border.Background" Value="DeepPink"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Outbreak">
+          <Setter Property="Background" Value="DarkOrange"></Setter>
+          <Setter Property="Border.Background" Value="DarkOrange"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Drought">
+          <Setter Property="Background" Value="SaddleBrown"></Setter>
+          <Setter Property="Border.Background" Value="SaddleBrown"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Blight">
+          <Setter Property="Background" Value="SandyBrown"></Setter>
+          <Setter Property="Border.Background" Value="SaddleBrown"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
 
-    </UserControl.Resources>
+  </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>

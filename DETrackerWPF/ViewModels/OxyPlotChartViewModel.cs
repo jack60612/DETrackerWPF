@@ -287,7 +287,7 @@ namespace DETrackerWPF.ViewModels
           DEInfHistory dh = new DEInfHistory();
           // Create new record
           dh.Date = histRec.timestamp.Date;
-          dh.DarkEchoInf = histRec.Factions[histRec.Factions.FindIndex(y => y.Name == "Dark Echo")].Influence * 100;
+          dh.DarkEchoInf = histRec.Factions[histRec.Factions.FindIndex(y => y.Name == Helper.FactionName)].Influence * 100;
           fp.DEInf.Add(dh);
         }
         DEPerformance.Add(fp);
@@ -303,7 +303,7 @@ namespace DETrackerWPF.ViewModels
           AvgInf ai = new AvgInf();
           ai.date = histRec.timestamp.Date;
           ai.starSystem = sys.StarSystem;
-          var index = histRec.Factions.FindIndex(f => f.Name == "Dark Echo");
+          var index = histRec.Factions.FindIndex(f => f.Name == Helper.FactionName);
           ai.deInf = histRec.Factions[index].Influence;
           avgDEInf.Add(ai);
         }

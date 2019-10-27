@@ -95,13 +95,21 @@ namespace DETrackerWPF.ViewModels
         Height = ((displayDESystems.Count * 16) + 259);
 
       // Frig to stop scroll bars appearing when a systems updates and sorting on update time
-      Height = Height + 24;
+      Height = Height + 36;
 
       MaxHeight = Height;
 
       // Build the summary line
-      var systemsControlled = displayDESystems.Count(x => x.SysFaction.Name == "Dark Echo");
-      var popControlled = displayDESystems.Where(x => x.SysFaction.Name == "Dark Echo").Sum(x => x.Population);
+
+      var systemsControlled = 0;
+      foreach (var des in displayDESystems)
+      {
+        if (des.SysFaction.Name == Helper.FactionName)
+          systemsControlled++;
+      }
+
+      //var systemsControlled = displayDESystems.Count(x => x.SysFaction.Name == Helper.FactionName);
+      var popControlled = displayDESystems.Where(x => x.SysFaction.Name == Helper.FactionName).Sum(x => x.Population);
       FactionSummary = string.Format("Population Controlled : {0:###,###,###} / Systems Controlled {1} / Present in {2} Systems", popControlled, systemsControlled, displayDESystems.Count);
 
       GetListViewData();

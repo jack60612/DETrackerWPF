@@ -32,14 +32,8 @@ namespace DETrackerWPF.ViewModels
 
     DataAccess dataAccess = new DataAccess();
 
-    string[] hexColours = new string[] { "#002A64",
-      "#7BC141",
-      "#767731",
-      "#97b8fd",
-      "#40e0d0",
-      "#d31145",
-      "#9a504c",
-      "#2e2c2e" };
+    string[] hexColours = new string[] { "#002A64","#7BC141","#767731","#97b8fd",
+                                         "#40e0d0","#d31145","#9a504c","#2e2c2e" };
 
     List<PlotColour> PlotColours = new List<PlotColour>();
 
@@ -50,7 +44,7 @@ namespace DETrackerWPF.ViewModels
       ShowPMFData = true;
       ProgressRingActive = true;
 
-      // Set up graph
+      // Set up line graph
       PlotModel = new PlotModel();
       PlotModel.LegendPlacement = LegendPlacement.Outside;
       PlotModel.LegendPosition = LegendPosition.BottomCenter;
@@ -58,16 +52,16 @@ namespace DETrackerWPF.ViewModels
       PlotModel.LegendBackground = OxyColor.FromAColor(200, OxyColors.White);
       PlotModel.LegendBorder = OxyColors.Black;
 
-
+      // Setup system influence Pie Chart
       FactionPlot = new PlotModel();
       FactionPlot.Title = "System Influence";
-      FactionPlot.LegendBackground = OxyColor.FromAColor(200, OxyColors.White);
-      FactionPlot.LegendBorder = OxyColors.Black;
-      FactionPlot.PlotMargins = new OxyThickness(25,25,35,25);
+      FactionPlot.TitleColor =  OxyColors.Cornsilk;
+      FactionPlot.TitleFontSize = 24;
+      FactionPlot.PlotMargins = new OxyThickness(25,25,25,25);
 
       var SelectSystem = deSystemsForDisplay[deSystemsForDisplay.FindIndex(x => x.StarSystem == sysName)];
       var CurrentFactionHistory = SelectSystem.FactionHistory.Last();
-      var deInf = CurrentFactionHistory.Factions[CurrentFactionHistory.Factions.FindIndex(x => x.Name == "Dark Echo")].Influence * 100;
+      var deInf = CurrentFactionHistory.Factions[CurrentFactionHistory.Factions.FindIndex(x => x.Name == Helper.FactionName)].Influence * 100;
 
       SystemOverview = new SystemOverviewModel();
       _displayDESystems = deSystemsForDisplay;
@@ -118,24 +112,24 @@ namespace DETrackerWPF.ViewModels
         StrokeThickness = 0.25,
         AngleSpan = 360,
         StartAngle = 0,
+        InnerDiameter = 0.4,
         InsideLabelFormat = "",
         OutsideLabelFormat = "{0:##.##}%",
-        TickHorizontalLength = 8,
-        TickRadialLength = 4,
-        FontWeight = FontWeights.Bold
-      };
-
-      var index = 0;
+        TickHorizontalLength = 10,
+        TickRadialLength = 6,
+        FontWeight = FontWeights.Bold,
+        TextColor =  OxyColors.Cornsilk,
+        ExplodedDistance = 0.1
+    };
 
       foreach (var faction in todaysRec.Factions)
       {
-        var hex = PlotColours[PlotColours.FindIndex(x => x.FactionName == faction.Name)].HexColour;
-        if (faction.Name == "Dark Echo")
-          ps.Slices.Add(new PieSlice(faction.Name, faction.Influence * 100) {IsExploded = true, Fill = OxyColor.Parse(hex)} );
+        var HexCode = PlotColours[PlotColours.FindIndex(x => x.FactionName == faction.Name)].HexColour;
+        if (faction.Name == Helper.FactionName)
+          ps.Slices.Add(new PieSlice(faction.Name, faction.Influence * 100) { IsExploded = true,  Fill = OxyColor.Parse(HexCode)} );
         else
-          ps.Slices.Add(new PieSlice(faction.Name, faction.Influence * 100){ Fill = OxyColor.Parse(hex) });
+          ps.Slices.Add(new PieSlice(faction.Name, faction.Influence * 100){ IsExploded = false, Fill = OxyColor.Parse(HexCode) });
 
-        index++;
       }
       FactionPlot.Series.Add(ps);
     }
@@ -219,18 +213,21 @@ namespace DETrackerWPF.ViewModels
         MajorGridlineStyle = LineStyle.Solid,
         MinorGridlineStyle = LineStyle.Dot,
         FontWeight = FontWeights.Bold,
+        TextColor = OxyColors.Cornsilk,
         IntervalLength = 80
       });
 
       PlotModel.Axes.Add(new LinearAxis
       {
         Position = AxisPosition.Left,
-        Title = "Influence%",
+        Title = "Influence %",
         AxisTitleDistance = 10,
         TitleFontWeight = FontWeights.Bold,
-        TitleFontSize = 12,
+        TitleFontSize = 14,
+        TitleColor = OxyColors.Cornsilk,
         MajorGridlineStyle = LineStyle.Solid,
         MinorGridlineStyle = LineStyle.Dot,
+        TextColor = OxyColors.Cornsilk,
         FontWeight = FontWeights.Bold
       });
     }

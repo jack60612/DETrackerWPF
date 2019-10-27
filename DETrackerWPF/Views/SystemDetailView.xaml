@@ -417,24 +417,24 @@
           Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="9">
 
       <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="300" />
+        <ColumnDefinition Width="325" />
         <ColumnDefinition Width ="Auto" />
         <ColumnDefinition Width ="*" />
       </Grid.ColumnDefinitions>
 
       <Grid.RowDefinitions>
-        <RowDefinition Height="300" />
+        <RowDefinition Height="325" />
       </Grid.RowDefinitions>
 
       <oxy:PlotView Model="{Binding FactionPlot}"
                       Grid.Column="0" Grid.Row="0"
-                      MinWidth="100" MinHeight="300"
+                      MinWidth="100" MinHeight="325"
                       Background="{StaticResource BgBrush3}" Margin="0,3,2,0">
       </oxy:PlotView>
 
       <oxy:PlotView Model="{Binding PlotModel}"
                       Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
-                      MinWidth="300" MinHeight="300"
+                      MinWidth="300" MinHeight="325"
                       Background="{StaticResource BgBrush3}" Margin="0,3,0,0">
       </oxy:PlotView>
 

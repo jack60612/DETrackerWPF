@@ -16,12 +16,30 @@ namespace DETrackerWPF
 {
     public class Helper
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="src"></param>
-        /// <returns></returns>
-        public BitmapImage Convert(Bitmap src)
+
+    // Faction Setup
+
+    private static string _factionName = "Dark Echo";
+    private static int _factionEDDBID = 11217;
+
+    public static string FactionName
+    {
+      get { return _factionName; }
+      set { _factionName = value; }
+    }
+
+    public static int FactionEDDBID
+    {
+      get { return _factionEDDBID; }
+      set { _factionEDDBID = value; }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="src"></param>
+    /// <returns></returns>
+    public BitmapImage Convert(Bitmap src)
         {
             MemoryStream ms = new MemoryStream();
             ((Bitmap) src).Save(ms, ImageFormat.Png);
@@ -32,7 +50,12 @@ namespace DETrackerWPF
             image.EndInit();
             return image;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="CurrentInfluence"></param>
+        /// <param name="Population"></param>
+        /// <returns></returns>
         public static double MaxInfluence(double CurrentInfluence, Int64 Population)
         {
           var p1 = (CurrentInfluence + (42.8 - Math.Log(Population, 2)));
@@ -41,12 +64,14 @@ namespace DETrackerWPF
           return (p1 / p2) * 100;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static string Clean(string str)
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    public static string Clean(string str)
         {
             var start = str.IndexOf("_", StringComparison.Ordinal) + 1;
             var workStr = str.Substring(start, (str.Length - start)).TrimEnd(';');
