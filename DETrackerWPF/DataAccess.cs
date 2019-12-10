@@ -689,11 +689,11 @@ namespace DETrackerWPF
 
         exp.InvasionTarget = false;
 
-        if ((ffd.Count - 1) > 6)
+        if ((ffd.Count) > 6)
           exp.InvasionTarget = true;
 
         // Valid expansion target
-        exp.FactionsInSystem = (ffd.Count - 1);
+        exp.FactionsInSystem = (ffd.Count);
         _expansionSystems.Add(exp);
       }
     }
@@ -1059,13 +1059,10 @@ namespace DETrackerWPF
     /// <param name="reader"></param>
     /// <returns></returns>
     private DESystemsForDisplay MapDESystemsForDisplay(SqlDataReader reader)
-
-
-
     {
+      #region Debug Code
 
-      DESystemsForDisplay detest = new DESystemsForDisplay();
-
+      //DESystemsForDisplay detest = new DESystemsForDisplay();
 
       //detest.StarSystem = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
       //detest.SystemAddress = reader.GetInt64(1);
@@ -1082,6 +1079,7 @@ namespace DETrackerWPF
       //detest.Updated = false;
       //return detest;
 
+      #endregion
 
       DESystemsForDisplay DESystem = new DESystemsForDisplay
       {
