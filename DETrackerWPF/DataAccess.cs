@@ -583,7 +583,7 @@ namespace DETrackerWPF
         StationType = reader.GetString(2),
         IsPlantery = Convert.ToBoolean(reader.GetString(3)),
         MaxLandingPad = reader.GetString(4),
-        DistanceFromStar = reader.GetInt32(5)
+        DistanceFromStar = reader.IsDBNull(5) ? 0 : reader.GetInt32(5)
       };
 
       return s;
