@@ -89,10 +89,10 @@ namespace DETrackerWPF.ViewModels
 
       Width = DefaultWidth;
       MaxWidth = Width;
-      if (ScreenHeight < (displayDESystems.Count * 16) + 259)
+      if (ScreenHeight < (displayDESystems.Count * 16) + 265)
         Height = ScreenHeight;
       else
-        Height = ((displayDESystems.Count * 16) + 259);
+        Height = ((displayDESystems.Count * 16) + 265);
 
       // Frig to stop scroll bars appearing when a systems updates and sorting on update time
       Height = Height + 40;
