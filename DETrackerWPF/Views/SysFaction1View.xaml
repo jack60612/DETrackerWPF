@@ -151,6 +151,26 @@
           <Setter Property="Border.Background" Value="SaddleBrown"></Setter>
           <Setter Property="Foreground" Value="White"></Setter>
         </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Infrastructure Failure">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Terrorist Attack">
+          <Setter Property="Background" Value="Red"></Setter>
+          <Setter Property="Border.Background" Value="Red"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Natural Disaster">
+          <Setter Property="Background" Value="OrangeRed"></Setter>
+          <Setter Property="Border.Background" Value="OrangeRed"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Public Holiday">
+          <Setter Property="Background" Value="Green"></Setter>
+          <Setter Property="Border.Background" Value="Green"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
       </Style.Triggers>
     </Style>
 

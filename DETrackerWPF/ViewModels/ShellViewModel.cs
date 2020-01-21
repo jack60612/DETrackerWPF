@@ -104,6 +104,17 @@ namespace DETrackerWPF.ViewModels
       var systemsControlled = 0;
       foreach (var des in displayDESystems)
       {
+        if (des.SysFaction == null)
+        {
+          System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show(string.Format("Error with systems data for : {0}\nPlease Visit system to Update\nDETracker will now Close", des.StarSystem),
+            "System Data Error",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error,
+            MessageBoxResult.OK,
+            MessageBoxOptions.DefaultDesktopOnly);
+          
+        }
+
         if (des.SysFaction.Name == Helper.FactionName)
           systemsControlled++;
       }
