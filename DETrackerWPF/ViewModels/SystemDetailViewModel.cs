@@ -260,6 +260,9 @@ namespace DETrackerWPF.ViewModels
       get { return PlanetaryStations.Count > 0; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void ExpRange()
     {
       ClosePMFs.Clear();
@@ -281,6 +284,23 @@ namespace DETrackerWPF.ViewModels
       }
       Task task = Task.Run(async () => await dataAccess.GetClosePlayerFactions(SystemOverview, _closePlayerFactions, _expansionSystems, ExpansionRange));
       task.ContinueWith(DataRetrived);
+    }
+
+    /// <summary>
+    /// Handle mousewheel scroll
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+      ScrollViewer scrollViewer = sender as ScrollViewer;
+
+      if (e.Delta > 0)
+        scrollViewer.LineUp();
+      else
+        scrollViewer.LineDown();
+
+      e.Handled = true;
     }
 
 

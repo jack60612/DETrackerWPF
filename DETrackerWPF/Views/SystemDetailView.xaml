@@ -439,7 +439,9 @@
         </Button>
 
         <ScrollViewer Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"
-                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="True"  VerticalAlignment="Top" Height="{Binding ElementName=ClosePMFs, Path=ActualHeight}">
+                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="True"  
+                      VerticalAlignment="Top" Height="{Binding ElementName=ClosePMFs, Path=ActualHeight}"
+                      cal:Message.Attach="[Event PreviewMouseWheel] = [PreviewMouseWheel($source, $eventArgs)]">
 
           <DataGrid x:Name="ExpansionTargetSystems"
                           Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"
