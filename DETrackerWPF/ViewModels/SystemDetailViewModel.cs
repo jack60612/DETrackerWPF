@@ -81,7 +81,9 @@ namespace DETrackerWPF.ViewModels
 
       // Fire off the retrieval of close PMFs and Expansion targets as background task 
       PMFStatus = "Loading Closest PMFs and Expansion Systems";
-      Task task = Task.Run(async () => await dataAccess.GetClosePlayerFactions(SystemOverview, _closePlayerFactions, _expansionSystems));
+      ExpansionRange = 20;
+      ExpansionRangeText = "Expansion Targets (20ly Cube)";
+      Task task = Task.Run(async () => await dataAccess.GetClosePlayerFactions(SystemOverview, _closePlayerFactions, _expansionSystems, ExpansionRange));
       task.ContinueWith(DataRetrived);
     }
 
@@ -258,11 +260,36 @@ namespace DETrackerWPF.ViewModels
       get { return PlanetaryStations.Count > 0; }
     }
 
+    public void ExpRange()
+    {
+      ClosePMFs.Clear();
+      ExpansionTargetSystems.Clear();
+
+      VisibilityState = true;
+      ShowPMFData = true;
+      ProgressRingActive = true;
+
+      if (ExpansionRange == 20)
+      {
+        ExpansionRange = 40;
+        ExpansionRangeText = "Expansion Targets (40ly Cube)";
+      }
+      else
+      {
+        ExpansionRange = 20;
+        ExpansionRangeText = "Expansion Targets (20ly Cube)";
+      }
+      Task task = Task.Run(async () => await dataAccess.GetClosePlayerFactions(SystemOverview, _closePlayerFactions, _expansionSystems, ExpansionRange));
+      task.ContinueWith(DataRetrived);
+    }
+
 
     // -----------------------------------------------------------------------------------------------------------------
     // --------------------------------------------       Properties     -----------------------------------------------
     // -----------------------------------------------------------------------------------------------------------------
 
+    private string _expansionRangeText;
+    private int _expansionRange;
     private bool _showLoadText;
     private bool _progressRingActive;
     private bool _showPMFData;
@@ -271,6 +298,26 @@ namespace DETrackerWPF.ViewModels
     private string _pmfStatus;
     private ObservableCollection<ClosePlayFactions> _closePMFs;
     private ObservableCollection<ExpansionSystems> _expansionTargetSystems;
+
+    public string ExpansionRangeText
+    {
+      get { return _expansionRangeText; }
+      set
+      {
+        _expansionRangeText = value;
+        NotifyOfPropertyChange(() => ExpansionRangeText);
+      }
+    }
+
+    public int ExpansionRange
+    {
+      get { return _expansionRange; }
+      set
+      {
+        _expansionRange = value;
+        NotifyOfPropertyChange(() => ExpansionRange);
+      }
+    }
 
     public bool VisibilityState
     {

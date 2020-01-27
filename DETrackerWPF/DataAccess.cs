@@ -592,9 +592,11 @@ namespace DETrackerWPF
     /// <summary>
     /// 
     /// </summary>
-    public async Task<string> GetClosePlayerFactions(SystemOverviewModel _systemOverview, List<ClosePlayFactions> _closestPlayerFactions, List<ExpansionSystems> _expansionSystems)
+    public async Task<string> GetClosePlayerFactions(SystemOverviewModel _systemOverview, List<ClosePlayFactions> _closestPlayerFactions, List<ExpansionSystems> _expansionSystems, int Range)
     {
-
+      _closestPlayerFactions.Clear();
+      _expansionSystems.Clear();
+      ExpansionRange = Range;
 
       using (SqlConnection sqlConnection = new SqlConnection(connectionString))
       {
@@ -665,7 +667,7 @@ namespace DETrackerWPF
             while (reader.Read())
             {
               var exp = MapExpansionSystems(reader);
-              if (getDistance.Within3DManhattanDistance(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z, 20))
+              if (getDistance.Within3DManhattanDistance(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z, ExpansionRange))
               {
                 exp.Distance = getDistance.Distance3D(_systemOverview.StarPos[0], _systemOverview.StarPos[1], _systemOverview.StarPos[2], exp.x, exp.y, exp.z);
                 _allExpansionTargets.Add(exp);
@@ -1167,6 +1169,7 @@ namespace DETrackerWPF
     private ObservableCollection<FactionHistData> _faction1;
     private DateTime _tickTime;
     private string _closelFactionStatus;
+    private int _expansionRange;
 
     public List<VisitHistory> DeVisitsHistory
     {
@@ -1250,5 +1253,10 @@ namespace DETrackerWPF
       }
     }
 
+    public int ExpansionRange
+    {
+      get { return _expansionRange; }
+      set {_expansionRange = value; }
+    }
   }
 }
