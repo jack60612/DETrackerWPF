@@ -163,8 +163,8 @@
       <RowDefinition Height="auto" />
       <RowDefinition Height="auto" />
       <RowDefinition Height="auto" />
-      <RowDefinition Height="auto" />
       <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="5" />
     </Grid.RowDefinitions>
 
@@ -426,11 +426,6 @@
         </DataGrid>
 
         <!-- Expansion Targets -->
-        <!--<TextBlock Grid.Column="2" Grid.Row="1"
-                           Text="Expansion Targets (20ly Cube)"
-                           TextAlignment="Center" FontWeight="DemiBold" FontSize="14"
-                           Margin="0,5"></TextBlock>-->
-
         <Button x:Name="ExpRange"
                 Grid.Column="2" Grid.Row="1"
                 Content="{Binding ExpansionRangeText}"
@@ -440,8 +435,10 @@
 
         <ScrollViewer Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"
                       VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" CanContentScroll="True"  
-                      VerticalAlignment="Top" Height="{Binding ElementName=ClosePMFs, Path=ActualHeight}"
+                      VerticalAlignment="Top" MaxHeight="560"
                       cal:Message.Attach="[Event PreviewMouseWheel] = [PreviewMouseWheel($source, $eventArgs)]">
+
+          <!--Height="{Binding ElementName=ClosePMFs, Path=ActualHeight}"-->
 
           <DataGrid x:Name="ExpansionTargetSystems"
                           Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2"
