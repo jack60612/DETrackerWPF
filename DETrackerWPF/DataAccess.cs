@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Configuration;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Windows;
 using Caliburn.Micro;
 using DETrackerWPF.Models;
 
@@ -1123,16 +1124,17 @@ namespace DETrackerWPF
       // ===============================================================================================
       // This is a run once code segment - it was here to encrypt the connection strings
       // ===============================================================================================
-      //var deServer = config.ConnectionStrings.ConnectionStrings["deServer"].ToString();
-      //var devServer = config.ConnectionStrings.ConnectionStrings["devServer"].ToString();
+      //var deServer = System.Configuration.ConfigurationManager.ConnectionStrings["deServer"].ToString();
+      //var devServer = System.Configuration.ConfigurationManager.ConnectionStrings["devServer"].ToString();
 
       //var deServerEncrypted = CryptorEngine.Encrypt(deServer, true);
       //var devServerEncrypted = CryptorEngine.Encrypt(devServer, true);
 
-      //config.ConnectionStrings.ConnectionStrings["deServer"].ConnectionString = deServerEncrypted;
-      //config.ConnectionStrings.ConnectionStrings["devServer"].ConnectionString = devServerEncrypted;
+      //System.Configuration.ConfigurationManager.ConnectionStrings["deServer"].ConnectionString = deServerEncrypted;
+      //System.Configuration.ConfigurationManager.ConnectionStrings["devServer"].ConnectionString = devServerEncrypted;
 
-      //config.Save(ConfigurationSaveMode.Minimal);
+      ////config.Save(ConfigurationSaveMode.Minimal);
+
       //ConfigurationManager.RefreshSection("connectionStrings");
 
       // ===============================================================================================
@@ -1141,7 +1143,10 @@ namespace DETrackerWPF
 
       // Get end decrypt the connection strings
       RemoteConnectionString = CryptorEngine.Decrypt(connections[1].ConnectionString, true);
-      //RemoteConnectionString = RemoteConnectionString.Replace("=true", "=false");
+
+      // Disable Encrypted Connection
+      RemoteConnectionString = RemoteConnectionString.Replace("=true", "=false");
+
       LocalConnectionString = CryptorEngine.Decrypt(connections[2].ConnectionString, true);
 
       connectionString = RemoteConnectionString;

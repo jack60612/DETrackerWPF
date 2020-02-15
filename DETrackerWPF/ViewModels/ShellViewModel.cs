@@ -54,7 +54,7 @@ namespace DETrackerWPF.ViewModels
 
       // Now Check for update
       //AutoUpdater.ReportErrors = true;
-      AutoUpdater.Start("https://www.darkecho.space/update/DETracker/DETracker.xml");
+      AutoUpdater.Start("http://bots.darkecho.org/update/DETracker/DETracker.xml");
 
       // Convert the .png images to something we can use in the grid
       UpTriangle = helper.Convert(DETrackerWPF.Properties.Resources.UpTriangle);
@@ -95,7 +95,7 @@ namespace DETrackerWPF.ViewModels
         Height = ((displayDESystems.Count * 16) + 265);
 
       // Frig to stop scroll bars appearing when a systems updates and sorting on update time
-      Height = Height + 40;
+      Height = Height + 45;
 
       MaxHeight = Height;
 
