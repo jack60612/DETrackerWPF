@@ -226,8 +226,8 @@ namespace DETrackerWPF.ViewModels
           case "infrastructurefailure":
             activeState.State = "Infrastructure Failure";
             break;
-          case "naturaldisasters":
-            activeState.State = "Natural Disasters";
+          case "naturaldisaster":
+            activeState.State = "Natural Disaster";
             break;
           case "publicholiday":
             activeState.State = "Public Holiday";
