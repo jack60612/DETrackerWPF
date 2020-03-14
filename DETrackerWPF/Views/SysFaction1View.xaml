@@ -171,6 +171,16 @@
           <Setter Property="Border.Background" Value="Green"></Setter>
           <Setter Property="Foreground" Value="White"></Setter>
         </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Famine">
+          <Setter Property="Background" Value="DarkSalmon"></Setter>
+          <Setter Property="Border.Background" Value="DarkSalmon"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
+        <DataTrigger Binding="{Binding State}" Value="Lockdown">
+          <Setter Property="Background" Value="Firebrick"></Setter>
+          <Setter Property="Border.Background" Value="Firebrick"></Setter>
+          <Setter Property="Foreground" Value="White"></Setter>
+        </DataTrigger>
       </Style.Triggers>
     </Style>
 
