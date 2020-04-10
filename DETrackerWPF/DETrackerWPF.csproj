@@ -236,7 +236,6 @@
   <ItemGroup>
     <Content Include="Inno\DETrackerWPF.iss" />
     <None Include="Resources\WebImage.png" />
-    <None Include="Resources\BuildDate.txt" />
     <Resource Include="squadronkraken_small.ico" />
     <None Include="Resources\NoChange.png" />
     <None Include="Resources\UpTriangle.png" />
